@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<!-- deaktivacija/aktivacija prodajalcev -->
-
+<!-- prodajalčev pogled na seznam strank -->
 <link rel="stylesheet" type="text/css" href="<?= CSS_URL . "style.css" ?>">
 <meta charset="UTF-8" />
-<title>Seznam prodajalcev</title>
+<title>Seznam uporabnikov</title>
 
 
-<h1>Vsi prodajalci</h1>
+<h1>Vsi uporabniki</h1>
+
 
 
 <table style="width:100%">
     <tr>
-        <th> Ime prodajalca</th>
-        <th> Priimek prodajalca </th>
+        <th> Ime stranke</th>
+        <th> Priimek stranke</th>
         <th> Email</th>
         <th> Aktiviraj </th>
         <th> Deaktiviraj</th>
     </tr>
-    <?php foreach($prodajalec as $key=>$value): ?> <!--izpiši vsakega prodajalca posebej-->
+    <?php foreach($stranka as $key=>$value): ?> <!--izpiši vsako stranko posebej-->
     <tr>
         <td><?php $name?></td>
         <td><?php $priimek ?> </td>
@@ -29,7 +29,7 @@
 </table>
 
 <a href="sign-in.php">
-    <button>Dodaj novega prodajalca</button>
+    <button>Dodaj novo stranko</button>
 </a>
 <a href="index-trgovina.php"> 
     <button> Vrni se na prvo stran </button>

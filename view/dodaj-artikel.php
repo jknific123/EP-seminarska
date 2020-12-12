@@ -5,4 +5,8 @@
 <title>Dodaj artikel</title>
 
 <h1>Dodaj artikel</h1>
-<!-- prodajalec doda artikel v trgovino -->
+<!-- TODO: prodajalec doda artikel v trgovino -->
+
+<a href="index-trgovina.php"> 
+    <button> Vrni se na prvo stran </button>
+</a>
