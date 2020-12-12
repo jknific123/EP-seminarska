@@ -23,10 +23,11 @@ CREATE TABLE IF NOT EXISTS `toystoredb`.`uporabnik` (
   `uporabnik_priimek` VARCHAR(45) NULL,
   `uporabnik_email` VARCHAR(45) NULL,
   `uporabnik_geslo` VARCHAR(255) NULL,
-  `uporabnik_aktiviran` TINYINT NULL,
+  `uporabnik_aktiviran` TINYINT NOT NULL DEFAULT 1,
   `uporabnik_naslov` VARCHAR(150) NULL,
   `uporabnik_vrsta` ENUM("stranka", "prodajalec", "administrator") NULL,
-  PRIMARY KEY (`uporabnik_id`))
+  PRIMARY KEY (`uporabnik_id`),
+  UNIQUE INDEX `uporabnik_id_UNIQUE` (`uporabnik_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -40,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `toystoredb`.`narocilo` (
   `uporabnik_id` INT NOT NULL,
   PRIMARY KEY (`narocilo_id`),
   INDEX `fk_narocilo_uporabnik_idx` (`uporabnik_id` ASC) VISIBLE,
+  UNIQUE INDEX `narocilo_id_UNIQUE` (`narocilo_id` ASC) VISIBLE,
   CONSTRAINT `fk_narocilo_uporabnik`
     FOREIGN KEY (`uporabnik_id`)
     REFERENCES `toystoredb`.`uporabnik` (`uporabnik_id`)
@@ -52,12 +54,13 @@ ENGINE = InnoDB;
 -- Table `toystoredb`.`artikel`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `toystoredb`.`artikel` (
-  `artikel_id` INT NOT NULL,
+  `artikel_id` INT NOT NULL AUTO_INCREMENT,
   `artikel_ime` VARCHAR(45) NULL,
   `artikel_cena` FLOAT NULL,
   `artikel_opis` VARCHAR(1000) NULL,
-  `artikel_aktiviran` TINYINT NULL,
-  PRIMARY KEY (`artikel_id`))
+  `artikel_aktiviran` TINYINT NOT NULL DEFAULT 1,
+  PRIMARY KEY (`artikel_id`),
+  UNIQUE INDEX `artikel_id_UNIQUE` (`artikel_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -87,3 +90,4 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
