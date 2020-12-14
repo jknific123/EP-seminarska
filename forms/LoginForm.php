@@ -17,26 +17,27 @@
     class LoginForm extends HTML_QuickForm2 {
         
         public $geslo;
-        public $email;
-        
+        public $email; 
         public $button;
         
         public function __construct($id) {
             parent::__construct($id);
-            
+
                 $this->email = new HTML_QuickForm2_Element_InputText('email');
-                $this->email->setAttribute('size',30);
-                $this->email->setLabel('email: ');
-                $this->addElement($this->email);
+                $this->email->setAttribute('size',25);
+                $this->email->setLabel('Elektronski naslov: ');
                 
                 
                 $this->geslo = new HTML_QuickForm2_Element_InputPassword('geslo');
-                $this->geslo->setAttribute('size',20);
-                $this->geslo->setLabel('geslo: ');
-                $this->addElement($this->geslo);
-                
+                $this->geslo->setLabel('Vnesite geslo:');
+                $this->geslo->setAttribute('size', 20);
+                $this->geslo->addRule('required', 'Geslo je obvezen podatek.');
+
                 $this->button = new HTML_QuickForm2_Element_InputSubmit(null);
                 $this->button->setAttribute('value', 'Prijavi se');
+                
+                $this->addElement($this->email);
+                $this->addElement($this->geslo);
                 $this->addElement($this->button);
                 
                 $this->addRecursiveFilter('trim');
