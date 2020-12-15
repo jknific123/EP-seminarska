@@ -5,7 +5,7 @@ class DBInit {
     private static $host = "localhost";
     private static $user = "root";
     private static $password = "ep";
-    private static $schema = "toystore"; #tle neki ne dela
+    private static $schema = "toystoredb"; #tle neki ne dela.. -> zdej bi moglo delat
     private static $instance = null;
 
     private function __construct() {
