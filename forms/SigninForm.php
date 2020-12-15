@@ -1,6 +1,6 @@
 
 <?php
-    set_include_path('/usr/share/php' . PATH_SEPARATOR . '/usr/share/kopano/php');
+    //set_include_path('/usr/share/php' . PATH_SEPARATOR . '/usr/share/kopano/php');
     
     require_once 'HTML/QuickForm2.php';
     require_once 'HTML/QuickForm2/Container/Fieldset.php';

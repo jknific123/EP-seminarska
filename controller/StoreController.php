@@ -1,6 +1,7 @@
 <?php
 
 require_once("model/ToysDB.php");
+require_once("model/Cart.php");
 require_once("ViewHelper.php");
 require_once("forms/ToysForm.php");
 
@@ -18,6 +19,12 @@ class StoreController {
             ]
         ];
 
+        $vars = [
+            "toys" => ToysDB::getAll(),
+            "cart" => Cart::getAll(),
+            "total" => Cart::total()
+        ];
+
         $data = filter_input_array(INPUT_GET, $rules);
 
         if (isset($data["id"])) {
@@ -25,9 +32,11 @@ class StoreController {
                 "toy" => ToysDB::get($data)
             ]);
         } else {
-            echo ViewHelper::render("view/toy-list.php", [
+            echo ViewHelper::render("view/toy-list.php", $vars);
+           /* echo ViewHelper::render("view/toy-list.php", [
                 "toys" => ToysDB::getAll()
             ]);
+           */
         }
     }
     public static function edit() {

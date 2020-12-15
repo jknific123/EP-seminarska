@@ -10,7 +10,7 @@
 
 <div> 
     <h1>Spletna trgovina igrač</h1>
-    <h2> Dobrodošli v naši trgovini z igračami! </h3>
+    <h2> Dobrodošli v naši trgovini z igračami! </h2>
 </div>
 
 <div>
