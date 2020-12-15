@@ -2,6 +2,9 @@
 
 require_once("model/ToysDB.php");
 
+// skopirano iz cart-mvc projekta, ce kej dodate dejte pls comment zraven da se ve
+
+
 class Cart {
 
     public static function getAll() {
@@ -12,46 +15,46 @@ class Cart {
         $ids = array_keys($_SESSION["cart"]);
         $cart = ToysDB::getForIds($ids);
 
-        // Adds a quantity field to each book in the list
-        foreach ($cart as &$book) {
-            $book["quantity"] = $_SESSION["cart"][$book["id"]];
+        // Adds a quantity field to each toy in the list
+        foreach ($cart as &$toy) {
+            $toy["quantity"] = $_SESSION["cart"][$toy["id"]];
         }
 
         return $cart;
     }
 
     public static function add($id) {
-        $book = ToysDB::get($id);
+        $toy = ToysDB::get($id);
 
-        if ($book != null) {
-            if (isset($_SESSION["cart"][$id])) {
+        if ($toy != null) {
+            if (isset($_SESSION["cart"][$id])) { //ce je ze v kosarici samo ++
                 $_SESSION["cart"][$id] += 1;
             } else {
-                $_SESSION["cart"][$id] = 1;
+                $_SESSION["cart"][$id] = 1; //cene nastavimo kolicino na 1
             }
         }
     }
 
     public static function update($id, $quantity) {
-        $book = ToysDB::get($id);
+        $toy = ToysDB::get($id);
         $quantity = intval($quantity);
 
-        if ($book != null) {
-            if ($quantity <= 0) {
+        if ($toy != null) {
+            if ($quantity <= 0) { //ce zmanjsamo kolicino na <= 0 zbrise igraco iz kosarice
                 unset($_SESSION["cart"][$id]);
-            } else {
+            } else { // cene nastavi kolicino na quantitiy
                 $_SESSION["cart"][$id] = $quantity;
             }
         }
     }
 
-    public static function purge() {
+    public static function purge() { //izbris kosarice
         unset($_SESSION["cart"]);
     }
 
-    public static function total() {
-        return array_reduce(self::getAll(), function ($total, $book) {
-            return $total + $book["price"] * $book["quantity"];
+    public static function total() { // izracuna sestevek cene
+        return array_reduce(self::getAll(), function ($total, $toy) {
+            return $total + $toy["price"] * $toy["quantity"];
         }, 0);
     }
 }

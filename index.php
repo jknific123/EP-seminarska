@@ -2,7 +2,7 @@
 
 session_start();
 
-//require_once("controller/ToysController.php");
+require_once("controller/ToysController.php");
 require_once("controller/PeopleController.php");
 require_once("controller/StoreController.php");
 //tle dodaš vse controllerje, ko jih ustvariš

@@ -2,27 +2,30 @@
 
 require_once 'model/AbstractDB.php';
 
+// tuki sem popravu te crud operacije da so zdej za artikle
+// dodal bom se ene par funkcij k jih rabi Cart.php
+
 class ToysDB extends AbstractDB {
 
     public static function insert(array $params) {
-        return parent::modify("INSERT INTO toy (author, title, description, price, year) "
-                        . " VALUES (:author, :title, :description, :price, :year)", $params);
+        return parent::modify("INSERT INTO artikel (artikel_ime, artikel_cena, artikel_opis) "
+                        . " VALUES (:ime, :cena, :opis)", $params);
     }
 
     public static function update(array $params) {
-        return parent::modify("UPDATE toy SET author = :author, title = :title, "
-                        . "description = :description, price = :price, year = :year"
-                        . " WHERE id = :id", $params);
+        return parent::modify("UPDATE artikel SET artikel_ime = :ime, artikel_cena = :cena, "
+                        . "artikel_opis = :opis"
+                        . " WHERE artikel_id = :id", $params);
     }
 
     public static function delete(array $id) {
-        return parent::modify("DELETE FROM toy WHERE id = :id", $id);
+        return parent::modify("DELETE FROM artikel WHERE artikel_id = :id", $id);
     }
 
     public static function get(array $id) {
-        $toys = parent::query("SELECT id, author, title, description, price, year"
-                        . " FROM toys"
-                        . " WHERE id = :id", $id);
+        $toys = parent::query("SELECT artikel_id, artikel_ime, artikel_cena, artikel_opis"
+                        . " FROM artikel"
+                        . " WHERE artikel_id = :id", $id);
         
         if (count($toys) == 1) {
             return $toys[0];
@@ -32,9 +35,24 @@ class ToysDB extends AbstractDB {
     }
 
     public static function getAll() {
-        return parent::query("SELECT id, author, title, price, year, description"
-                        . " FROM toy"
-                        . " ORDER BY id ASC");
+        return parent::query("SELECT artikel_id, artikel_ime, artikel_cena, artikel_opis"
+                        . " FROM artikel"
+                        . " ORDER BY artikel_id ASC");
+    }
+
+    // za Cart.php
+    public static function getForIds($ids) {
+        $db = DBInit::getInstance();
+
+        $id_placeholders = implode(",", array_fill(0, count($ids), "?"));
+
+        $statement = $db->prepare("SELECT artikel_id, artikel_ime, artikel_cena, artikel_opis FROM artikel 
+            WHERE artikel_id IN (" . $id_placeholders . ")");
+        $statement->execute($ids);
+
+        // mogoce se da to skrajsat pa nardit z parent::query -> TODO
+
+        return $statement->fetchAll();
     }
 
 }
