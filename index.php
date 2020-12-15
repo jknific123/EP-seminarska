@@ -2,7 +2,9 @@
 
 session_start();
 
-require_once("controller/ToysController.php");
+//require_once("controller/ToysController.php");
+require_once("controller/PeopleController.php");
+require_once("controller/StoreController.php");
 //tle dodaš vse controllerje, ko jih ustvariš
 
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
@@ -10,6 +12,13 @@ define("IMAGES_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "static/image
 define("CSS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "static/css/");
 
 $path = isset($_SERVER["PATH_INFO"]) ? trim($_SERVER["PATH_INFO"], "/") : "";
+
+/* Uncomment to see the contents of variables
+var_dump(BASE_URL);
+var_dump(IMAGES_URL);
+var_dump(CSS_URL);
+var_dump($path);
+exit(); */
 
 // ROUTER: preusmeri na določeno funkcijo znotraj controllerjev
 $urls = [
