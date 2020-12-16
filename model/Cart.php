@@ -17,7 +17,7 @@ class Cart {
 
         // Adds a quantity field to each toy in the list
         foreach ($cart as &$toy) {
-            $toy["quantity"] = $_SESSION["cart"][$toy["id"]];
+            $toy["quantity"] = $_SESSION["cart"][$toy["artikel_id"]];
         }
 
         return $cart;
@@ -54,7 +54,7 @@ class Cart {
 
     public static function total() { // izracuna sestevek cene
         return array_reduce(self::getAll(), function ($total, $toy) {
-            return $total + $toy["price"] * $toy["quantity"];
+            return $total + $toy["artikel_cena"] * $toy["quantity"];
         }, 0);
     }
 }
