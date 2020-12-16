@@ -55,38 +55,39 @@
         <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
         <p> Ime izdelka: <?= $toy["artikel_ime"] ?> </p>
         <p> Cena izdelka: <?= number_format($toy["artikel_cena"], 2) ?> EUR </p>
-        <button>Add to cart</button>
+        <button> Dodaj v košarico </button>
         </form>
         <a href="<?= BASE_URL . "toy/edit" ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php-->
     </div>
 
 <?php endforeach; ?>
-    <?php var_dump($cart); ?>
 </div>
 
 
 <!--koda za vozicek-->
-<?php var_dump($cart); ?>
+<?php //var_dump($cart); ?>
 <?php if (!empty($cart)): ?>
-    <?php var_dump($cart); ?>
 
     <div id="cart">
-        <h3>Shopping cart</h3>
+        <h3>Košarica</h3>
         <?php foreach ($cart as $toy): ?>
 
             <form action="<?= BASE_URL . "store/update-cart" ?>" method="post">
                 <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
                 <input type="number" name="quantity" value="<?= $toy["quantity"] ?>" class="update-cart" />
                 &times; <?= $toy["artikel_ime"] ?>
-                <button>Update</button>
+                <button>Posodobi</button>
             </form>
 
         <?php endforeach; ?>
 
-        <p>Total: <b><?= number_format($total, 2) ?> EUR</b></p>
+        <p>Skupaj: <b><?= number_format($total, 2) ?> EUR</b></p>
 
         <form action="<?= BASE_URL . "store/purge-cart" ?>" method="post">
-            <p><button>Purge cart</button></p>
+            <p><button>Izprazni košarico</button></p>
+        </form>
+        <form action="<?= BASE_URL . "store" ?>" method="post">
+            <p><button> Potrdi nakup </button></p>
         </form>
     </div>
 

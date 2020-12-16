@@ -37,7 +37,7 @@ class Cart {
     }
 
     public static function update($id, $quantity) {
-        $toy = ToysDB::get($id);
+        $toy = ToysDB::get(array("id" => $id));
         $quantity = intval($quantity);
 
         if ($toy != null) {
