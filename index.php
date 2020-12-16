@@ -58,11 +58,11 @@ $urls = [
     // tuki ki mas toy/neki mislim da bojo ToysController-funkcije ne pa StoreController -> bom sproti popravu
     "toy/edit" => function () {
         #uredi-artikel
-        StoreController::edit();
+        ToysController::edit();
     },
     "toy/add" => function () {
         #dodaj-artikel
-        StoreController::add();
+        ToysController::add();
     },
     "toy/delete" => function () {
         ToysController::delete();

@@ -66,15 +66,6 @@ class StoreController {
 
         ViewHelper::redirect(BASE_URL . "store");
     }
-
-
-    public static function edit() {
-
-    }
-    
-    public static function add() {
-
-    }
     
     public static function order() {
 

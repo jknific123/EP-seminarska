@@ -13,9 +13,7 @@
     <!--tle dodaj še povezavo na slike izdelka -->
 </div>
 
-<?php if ($uporabnik == "stranka"): ?>
-    <button> Dodaj artikel v košarico </button>
-<?php elseif ($uporabnik == "prodajalec") : ?>
+<?php // else ($uporabnik == "prodajalec") : ?>
     <!-- TODO implementiraj možnost spreminjanja atributov -->
     
     
@@ -24,7 +22,7 @@
     
     
     <button> Izbriši artikel </button> <!--TODO artikel ni več na voljo v trgovini-->
-<?php endif; ?>
+<?php //endif; ?>
     
 <a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>
 

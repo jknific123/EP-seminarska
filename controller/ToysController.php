@@ -2,6 +2,7 @@
 
 require_once("model/ToysDB.php");
 require_once("ViewHelper.php");
+require_once("forms/ToysForm.php");
 
 // skopirano iz cart-mvc projekta, ce kej dodate dejte pls comment zraven da se ve
 // BookDB sem spremenil v ToysDB, ostalo je treba se popravit

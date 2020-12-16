@@ -29,7 +29,7 @@
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "order/list" ?>"> <button> Vsa moja naročila </button></a> <!--narocilo-list.php-->
     <a href="<?= BASE_URL . "users" ?>"> <button> Vse stranke </button></a> <!--seznam-strank.php-->
-    <a href="<?= BASE_URL . "toys/add" ?>"> <button> Dodaj nov artikel </button></a> <!--dodaj-artikel.php-->
+    <a href="<?= BASE_URL . "toy/add" ?>"> <button> Dodaj nov artikel </button></a> <!--dodaj-artikel.php-->
     <a href="<?= BASE_URL . "" ?>"> 
         <button> Odjava </button> <!--treba spremenit uporabnika nazaj na anonimnega userja -->
     </a> <br>
