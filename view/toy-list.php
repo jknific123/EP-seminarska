@@ -6,11 +6,6 @@
 
 <h1>Toystore</h1>
 
-<p>[
-    <a href="<?= BASE_URL . "book" ?>">All books</a> |
-    <a href="<?= BASE_URL . "book/add" ?>">Add new</a> |
-    <a href="<?= BASE_URL . "store" ?>">Bookstore</a>
-    ]</p>
 
 <div id="main">
     <?php var_dump($toys);?>

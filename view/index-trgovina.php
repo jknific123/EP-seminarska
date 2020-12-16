@@ -46,14 +46,12 @@
 <?php endif; ?>
 </div>
 
-<div>
-<?php foreach($array as $key=>$value):?> <!--loop čez vse artikle - array je tabela vseh artiklov, key je števec -->
-    <div>
-        <p> Ime izdelka: <?php $name ?> </p>
-        <p> Cena izdelka: <?php $cena ?> </p>
-        <a href="uredi-artikel.php"> 
-            <button> Podrobnosti </button>
-        </a>
+<div id="main">
+<?php foreach ($toys as $toy): ?><!--loop čez vse artikle -->
+    <div class="toy">
+        <p> Ime izdelka: <?= $toy["artikel_ime"] ?> </p>
+        <p> Cena izdelka: <?= number_format($toy["artikel_cena"], 2) ?> EUR </p>
+        <a href="<?= BASE_URL . "toys/edit" ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php-->
     </div>
 
 <?php endforeach; ?>

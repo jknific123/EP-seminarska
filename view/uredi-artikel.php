@@ -27,3 +27,4 @@
 <?php endif; ?>
     
 <a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>
+
