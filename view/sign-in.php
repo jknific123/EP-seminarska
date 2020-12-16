@@ -7,3 +7,10 @@
 <h1>Registracija</h1>
 
 <!-- tukaj se uporabnik registrira -->
+
+
+<?= $form ?>
+
+<?= isset($errorMessage) ? $errorMessage : "" ?>
+
+<a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>

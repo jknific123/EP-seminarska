@@ -4,5 +4,13 @@
 <meta charset="UTF-8" />
 <title>Prijava</title>
 
-<h1>Prijava</h1>
+
 <!-- prijava že uporabnika, ki je že v bazi -->
+
+<h1>Prijava</h1>
+
+<?= $form ?>
+
+<?= isset($errorMessage) ? $errorMessage : "" ?>
+
+<a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>

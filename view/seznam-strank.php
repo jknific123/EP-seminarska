@@ -28,9 +28,6 @@
     <?php endforeach; ?>
 </table>
 
-<a href="sign-in.php">
-    <button>Dodaj novo stranko</button>
-</a>
-<a href="index-trgovina.php"> 
-    <button> Vrni se na prvo stran </button>
-</a>
+
+<a href="<?= BASE_URL . "sign-in" ?>"><button> Dodaj novo stranko </button></a> <!--sign-in.php-->
+<a href="<?= BASE_URL . "" ?>"><button> Vrni se na prvo stran </button></a>

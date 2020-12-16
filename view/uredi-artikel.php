@@ -25,6 +25,5 @@
     
     <button> Izbriši artikel </button> <!--TODO artikel ni več na voljo v trgovini-->
 <?php endif; ?>
-<a href="index-trgovina.php"> 
-    <button> Vrni se na prvo stran </button>
-</a>
+    
+<a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>

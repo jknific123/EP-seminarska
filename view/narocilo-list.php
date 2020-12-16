@@ -41,6 +41,4 @@
     <?php endif; ?>
 </table>
 
-<a href="index-trgovina.php"> 
-    <button> Vrni se na prvo stran </button>
-</a>
+<a href="<?= BASE_URL . "" ?>"><button> Vrni se na prvo stran </button></a>

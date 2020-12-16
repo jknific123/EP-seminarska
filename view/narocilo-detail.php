@@ -12,15 +12,11 @@
     <div>
         <p> Ime izdelka: <?php $name ?> </p>
         <p> Cena izdelka: <?php $cena ?> </p>
-        <a href="uredi-artikel.php"> 
-            <button> Podrobnosti </button>
-        </a> 
+        <a href="<?= BASE_URL . "toys/edit" ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php--> 
         <button>Odstrani artikel iz košarice</button> <!-- TODO: tle je treba zbrisat artikel iz tabele-->
     </div>
 
 <?php endforeach; ?>
 
 <button> Potrdi nakup </button> <!--TODO: naročilo postane vidno prodajalcu-->
-<a href="index-trgovina.php"> 
-    <button> Vrni se na prvo stran </button>
-</a>
+<a href="<?= BASE_URL . "" ?>"><button> Nazaj </button></a> <!--index-trgovina.php-->

@@ -7,6 +7,9 @@
 <h1>Dodaj artikel</h1>
 <!-- TODO: prodajalec doda artikel v trgovino -->
 
-<a href="index-trgovina.php"> 
-    <button> Vrni se na prvo stran </button>
-</a>
+<?= $form ?>
+
+<?= isset($errorMessage) ? $errorMessage : "" ?>
+
+
+<a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>
