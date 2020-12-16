@@ -22,10 +22,6 @@ exit(); */
 
 // ROUTER: preusmeri na določeno funkcijo znotraj controllerjev
 $urls = [
-    "toys" => function () {
-        #index-trgovina
-        StoreController::index();
-    },
     "admin" => function () {
         #admin-view
         PeopleController::admin();
@@ -46,13 +42,30 @@ $urls = [
         #seznam-uporabnikov
         PeopleController::users();
     },
-    "toys/edit" => function () {
+    "store" => function () {
+        #index-trgovina
+        StoreController::index();
+    },
+    "store/add-to-cart" => function () {
+        StoreController::addToCart();
+    },
+    "store/update-cart" => function () {
+        StoreController::updateCart();
+    },
+    "store/purge-cart" => function () {
+        StoreController::purgeCart();
+    },
+    // tuki ki mas toy/neki mislim da bojo ToysController-funkcije ne pa StoreController -> bom sproti popravu
+    "toy/edit" => function () {
         #uredi-artikel
         StoreController::edit();
     },
-    "toys/add" => function () {
+    "toy/add" => function () {
         #dodaj-artikel
         StoreController::add();
+    },
+    "toy/delete" => function () {
+        ToysController::delete();
     },
     "order" => function () {
         #narocilo-detail
@@ -63,7 +76,7 @@ $urls = [
         StoreController::orderList();
     },
     "" => function () { //če ni nič napisano usmeri na prvo stran od trgovine, torej razdelek toys
-        ViewHelper::redirect(BASE_URL . "toys");
+        ViewHelper::redirect(BASE_URL . "store");
     },
 ];
 

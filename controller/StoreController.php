@@ -39,6 +39,35 @@ class StoreController {
            */
         }
     }
+
+    public static function addToCart() {
+        $id = isset($_POST["artikel_id"]) ? intval($_POST["artikel_id"]) : null;
+
+        if ($id !== null) {
+            Cart::add($id);
+        }
+
+        ViewHelper::redirect(BASE_URL . "store");
+    }
+
+    public static function updateCart() {
+        $id = (isset($_POST["artikel_id"])) ? intval($_POST["artikel_id"]) : null;
+        $quantity = (isset($_POST["quantity"])) ? intval($_POST["quantity"]) : null;
+
+        if ($id !== null && $quantity !== null) {
+            Cart::update($id, $quantity);
+        }
+
+        ViewHelper::redirect(BASE_URL . "store");
+    }
+
+    public static function purgeCart() {
+        Cart::purge();
+
+        ViewHelper::redirect(BASE_URL . "store");
+    }
+
+
     public static function edit() {
 
     }

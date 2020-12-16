@@ -51,10 +51,43 @@
 <div id="main">
 <?php foreach ($toys as $toy): ?><!--loop čez vse artikle -->
     <div class="toy">
+        <form action="<?= BASE_URL . "store/add-to-cart" ?>" method="post" />
+        <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
         <p> Ime izdelka: <?= $toy["artikel_ime"] ?> </p>
         <p> Cena izdelka: <?= number_format($toy["artikel_cena"], 2) ?> EUR </p>
-        <a href="<?= BASE_URL . "toys/edit" ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php-->
+        <button>Add to cart</button>
+        </form>
+        <a href="<?= BASE_URL . "toy/edit" ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php-->
     </div>
 
 <?php endforeach; ?>
+    <?php var_dump($cart); ?>
 </div>
+
+
+<!--koda za vozicek-->
+<?php var_dump($cart); ?>
+<?php if (!empty($cart)): ?>
+    <?php var_dump($cart); ?>
+
+    <div id="cart">
+        <h3>Shopping cart</h3>
+        <?php foreach ($cart as $toy): ?>
+
+            <form action="<?= BASE_URL . "store/update-cart" ?>" method="post">
+                <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
+                <input type="number" name="quantity" value="<?= $toy["quantity"] ?>" class="update-cart" />
+                &times; <?= $toy["artikel_ime"] ?>
+                <button>Update</button>
+            </form>
+
+        <?php endforeach; ?>
+
+        <p>Total: <b><?= number_format($total, 2) ?> EUR</b></p>
+
+        <form action="<?= BASE_URL . "store/purge-cart" ?>" method="post">
+            <p><button>Purge cart</button></p>
+        </form>
+    </div>
+
+<?php endif; ?>

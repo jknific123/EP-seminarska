@@ -13,7 +13,7 @@
 
         <div class="toy">
             <form action="<?= BASE_URL . "store/add-to-cart" ?>" method="post" />
-            <input type="hidden" name="id" value="<?= $toy["artikel_id"] ?>" />
+            <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
             <p><?= $toy["artikel_ime"] ?></p>
             <p><?= $toy["artikel_opis"] ?> </p>
             <p><?= number_format($toy["artikel_cena"], 2) ?> EUR<br/>

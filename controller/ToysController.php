@@ -6,7 +6,7 @@ require_once("ViewHelper.php");
 // skopirano iz cart-mvc projekta, ce kej dodate dejte pls comment zraven da se ve
 // BookDB sem spremenil v ToysDB, ostalo je treba se popravit
 
-class BookController {
+class ToysController {
 
     public static function index() {
         if (isset($_GET["id"])) {
