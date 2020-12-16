@@ -17,25 +17,24 @@ class ToysController {
         }
     }
 
-    public static function showAddForm($values = ["author" => "", "title" => "",
-        "price" => "", "year" => ""]) {
-        ViewHelper::render("view/book-add.php", $values);
+    public static function showAddForm($values) {
+        echo ViewHelper::render("view/dodaj-artikel.php", $values);
     }
 
     public static function add() {
-        $validData = isset($_POST["author"]) && !empty($_POST["author"]) &&
-            isset($_POST["title"]) && !empty($_POST["title"]) &&
-            isset($_POST["year"]) && !empty($_POST["year"]) &&
-            isset($_POST["price"]) && !empty($_POST["price"]);
-
-        if ($validData) {
-            ToysDB::insert($_POST["author"], $_POST["title"], $_POST["price"], $_POST["year"]);
-            ViewHelper::redirect(BASE_URL . "book");
-        } else {
-            self::showAddForm($_POST);
+        $form = new ToysInsertForm("new_toy");
+        
+        if ($form->validate()) {
+            $id = ToysDB::insert($form->getValue());     
+            // TODO: redirect to /view/uredi-artikel.php?id=$id ??
+            ViewHelper::redirect(BASE_URL . "store");
+        } else { // GET request or invalid data - show form
+            self::showAddForm([
+                "form" => $form
+            ]);
         }
     }
-
+ 
     public static function showEditForm($book = []) {
         if (empty($book)) {
             $book = ToysDB::get($_GET["id"]);

@@ -28,7 +28,7 @@ class StoreController {
         $data = filter_input_array(INPUT_GET, $rules);
 
         if (isset($data["id"])) {
-            echo ViewHelper::render("view/toy-detail.php", [
+            echo ViewHelper::render("view/uredi-artikel.php", [
                 "toy" => ToysDB::get($data)
             ]);
         } else {

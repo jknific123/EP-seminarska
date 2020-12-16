@@ -12,44 +12,44 @@ require_once 'HTML/QuickForm2/Element/InputCheckbox.php';
 
 abstract class ToysAbstractForm extends HTML_QuickForm2 {
 
-    public $name;
-    public $price;
-    public $description;
+    public $ime;
+    public $cena;
+    public $opis;
     //public $aktiviran;
     public $button;
 
     public function __construct($id) {
         parent::__construct($id);
 
-        $this->name = new HTML_QuickForm2_Element_InputText('name');
-        $this->name->setAttribute('size', 50);
-        $this->name->setLabel('Ime artikla:');
-        $this->name->addRule('required', 'Ime je obvezen podatek.');
-        $this->name->addRule('regex', 'Uporabljajte samo črke.', '/^[a-zA-ZščćžŠČĆŽ ]+$/');
-        $this->name->addRule('maxlength', 'Ime naj bo krajše od 45 znakov.', 45);
+        $this->ime = new HTML_QuickForm2_Element_InputText('ime');
+        $this->ime->setAttribute('size', 50);
+        $this->ime->setLabel('Ime artikla:');
+        $this->ime->addRule('required', 'Ime je obvezen podatek.');
+        $this->ime->addRule('regex', 'Uporabljajte samo črke.', '/^[a-zA-ZščćžŠČĆŽ ]+$/');
+        $this->ime->addRule('maxlength', 'Ime naj bo krajše od 45 znakov.', 45);
       
-        $this->price = new HTML_QuickForm2_Element_InputText('price');
-        $this->price->setAttribute('size', 10);
-        $this->price->setLabel('Cena artikla:');
-        $this->price->addRule('required', 'Cena artikla je obvezen podatek.');
-        $this->price->addRule('callback', 'Cena more biti veljavno število.', array(
+        $this->cena = new HTML_QuickForm2_Element_InputText('cena');
+        $this->cena->setAttribute('size', 10);
+        $this->cena->setLabel('Cena artikla:');
+        $this->cena->addRule('required', 'Cena artikla je obvezen podatek.');
+        $this->cena->addRule('callback', 'Cena more biti veljavno število.', array(
             'callback' => 'filter_var',
             'arguments' => [FILTER_VALIDATE_FLOAT]
                 )
         );
         
-        $this->description = new HTML_QuickForm2_Element_Textarea('description');
-        $this->description->setAttribute('rows', 5);
-        $this->description->setAttribute('cols', 50);
-        $this->description->setLabel('Opis artika:');
-        $this->description->addRule('required', 'Opis artikla je obvezen podatek');
+        $this->opis = new HTML_QuickForm2_Element_Textarea('opis');
+        $this->opis->setAttribute('rows', 5);
+        $this->opis->setAttribute('cols', 50);
+        $this->opis->setLabel('Opis artika:');
+        $this->opis->addRule('required', 'Opis artikla je obvezen podatek');
         
         $this->button = new HTML_QuickForm2_Element_InputSubmit(null);
         $this->button->setAttribute('value', 'Potrdi');
         
-        $this->addElement($this->name);
-        $this->addElement($this->price);
-        $this->addElement($this->description);
+        $this->addElement($this->ime);
+        $this->addElement($this->cena);
+        $this->addElement($this->opis);
         $this->addElement($this->button);
         
         $this->addRecursiveFilter('trim');
