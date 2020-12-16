@@ -86,7 +86,7 @@
         <form action="<?= BASE_URL . "store/purge-cart" ?>" method="post">
             <p><button>Izprazni košarico</button></p>
         </form>
-        <form action="<?= BASE_URL . "store" ?>" method="post">
+        <form action="<?= BASE_URL . "store/potrdi-nakup" ?>" method="post">
             <p><button> Potrdi nakup </button></p>
         </form>
     </div>

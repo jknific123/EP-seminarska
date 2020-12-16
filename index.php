@@ -55,6 +55,9 @@ $urls = [
     "store/purge-cart" => function () {
         StoreController::purgeCart();
     },
+    "store/potrdi-nakup" => function () {
+        StoreController::finishOrder();
+    },
     // tuki ki mas toy/neki mislim da bojo ToysController-funkcije ne pa StoreController -> bom sproti popravu
     "toy/edit" => function () {
         #uredi-artikel

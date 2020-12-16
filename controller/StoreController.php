@@ -66,7 +66,18 @@ class StoreController {
 
         ViewHelper::redirect(BASE_URL . "store");
     }
-    
+
+    public static function finishOrder() {
+
+        $vars = [
+            "toys" => ToysDB::getAll(),
+            "cart" => Cart::getAll(),
+            "total" => Cart::total()
+        ];
+
+        echo ViewHelper::render("view/potrdi-nakup.php", $vars);
+    }
+
     public static function order() {
 
     }
