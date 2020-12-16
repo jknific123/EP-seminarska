@@ -10,7 +10,7 @@ require_once 'HTML/QuickForm2/Element/InputText.php';
 require_once 'HTML/QuickForm2/Element/Textarea.php';
 require_once 'HTML/QuickForm2/Element/InputCheckbox.php';
 
-abstract class ToysForm extends HTML_QuickForm2 {
+abstract class ToysAbstractForm extends HTML_QuickForm2 {
 
     public $name;
     public $price;
@@ -54,6 +54,51 @@ abstract class ToysForm extends HTML_QuickForm2 {
         
         $this->addRecursiveFilter('trim');
         $this->addRecursiveFilter('htmlspecialchars');
+    }
+
+}
+class ToysInsertForm extends ToysAbstractForm {
+
+    public function __construct($id) {
+        parent::__construct($id);
+
+        $this->button->setAttribute('value', 'Dodaj artikel');
+    }
+
+}
+
+class ToysEditForm extends ToysAbstractForm {
+
+    public $id;
+
+    public function __construct($id) {
+        parent::__construct($id);
+
+        $this->button->setAttribute('value', 'Uredi artikel');
+        $this->id = new HTML_QuickForm2_Element_InputHidden("id");
+        $this->addElement($this->id);
+    }
+
+}
+
+class ToysDeleteForm extends HTML_QuickForm2 {
+
+    public $id;
+
+    public function __construct($id) {
+        parent::__construct($id, "post", ["action" => BASE_URL . "toy/delete"]);
+
+        $this->id = new HTML_QuickForm2_Element_InputHidden("id");
+        $this->addElement($this->id);
+
+        $this->confirmation = new HTML_QuickForm2_Element_InputCheckbox("confirmation");
+        $this->confirmation->setLabel('Delete?');
+        $this->confirmation->addRule('required', 'Tick if you want to delete this toy.');
+        $this->addElement($this->confirmation);
+
+        $this->button = new HTML_QuickForm2_Element_InputSubmit(null);
+        $this->button->setAttribute('value', 'Izbriši artikel');
+        $this->addElement($this->button);
     }
 
 }
