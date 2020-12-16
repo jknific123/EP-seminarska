@@ -14,36 +14,38 @@
 </div>
 
 <div>
-<?php if ($uporabnik == "stranka") : ?>
+    <?php //if ($uporabnik == "stranka") : ?>
+    <p> Stranka: </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "order/list" ?>"> <button> Vsa moja naročila </button></a> <!--narocilo-list.php-->
     <a href="<?= BASE_URL . "order" ?>"><button> Košarica </button></a> <!--narocilo-detail.php-->
     <a href="<?= BASE_URL . "" ?>">
         <button> Odjava </button> <!--treba spremenit uporabnika nazaj na anonimnega userja -->
     </a>
+    <br>
 
-
-<?php elseif ($uporabnik == "prodajalec") : ?>
+<!--<?php //elseif ($uporabnik == "prodajalec") : ?>-->
+<p> Prodajalec </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "order/list" ?>"> <button> Vsa moja naročila </button></a> <!--narocilo-list.php-->
     <a href="<?= BASE_URL . "users" ?>"> <button> Vse stranke </button></a> <!--seznam-strank.php-->
     <a href="<?= BASE_URL . "toys/add" ?>"> <button> Dodaj nov artikel </button></a> <!--dodaj-artikel.php-->
     <a href="<?= BASE_URL . "" ?>"> 
         <button> Odjava </button> <!--treba spremenit uporabnika nazaj na anonimnega userja -->
-    </a>
-
-<?php elseif ($uporabnik == "admin") : ?>
+    </a> <br>
+    <p> Admin </p>
+<!--<?php //elseif ($uporabnik == "admin") : ?>-->
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "admin" ?>"><button> Vsi prodajalci </button></a> <!--admin-view.php-->
     <a href="<?= BASE_URL . "" ?>">
         <button> Odjava </button> <!--treba spremenit uporabnika nazaj na anonimnega userja -->
     </a>
-
-
-<?php else: ?> <!--anonimni user-->
+    <br>
+    <p> Anonimni </p>
+<!--<?php //else: ?> anonimni user-->
     <a href="<?= BASE_URL . "log-in" ?>"><button> Prijava </button></a> <!--log-in.php-->
     <a href="<?= BASE_URL . "sign-in" ?>"><button> Registracija </button></a> <!--sign-in.php-->
-<?php endif; ?>
+<!--<?php //endif; ?>-->
 </div>
 
 <div id="main">

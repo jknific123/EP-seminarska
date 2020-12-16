@@ -32,7 +32,7 @@ class StoreController {
                 "toy" => ToysDB::get($data)
             ]);
         } else {
-            echo ViewHelper::render("view/toy-list.php", $vars);
+            echo ViewHelper::render("view/index-trgovina.php", $vars);
            /* echo ViewHelper::render("view/toy-list.php", [
                 "toys" => ToysDB::getAll()
             ]);
