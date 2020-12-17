@@ -6,12 +6,12 @@
     require_once 'HTML/QuickForm2/Container/Fieldset.php';
     require_once 'HTML/QuickForm2/Element/InputSubmit.php';
     require_once 'HTML/QuickForm2/Element/InputText.php';
+    require_once 'HTML/QuickForm2/Element/Select.php';
     
     require_once 'HTML/QuickForm2/Element/Textarea.php';
     require_once 'HTML/QuickForm2/Element/InputCheckbox.php';
     require_once 'HTML/QuickForm2/Element/InputPassword.php';
-    
-    
+
     
     //Forma za registracijo stranke
     //Stranka ima atribute v DB: id, ime, priimek, email, geslo, aktiviran, naslov, vrsta uporabnika
@@ -62,7 +62,7 @@
                 $this->geslo->addRule('required', 'Geslo je obvezen podatek.');
                 $this->geslo->addRule('minlength', 'Geslo naj vsebuje vsaj 5 znakov.', 5);
                 $this->geslo->addRule('regex', 'V geslu uporabite vsaj 1 številko.', '/[0-9]+/');
-                $this->geslo->addRule('regex', 'V geslu uporabite vsaj 1 veliko črko.', '/[A-Z]+/');
+                //$this->geslo->addRule('regex', 'V geslu uporabite vsaj 1 veliko črko.', '/[A-Z]+/');
                 $this->geslo->addRule('regex', 'V geslu uporabite vsaj 1 malo črko.', '/[a-z]+/');
                 
                 $this->naslov = new HTML_QuickForm2_Element_InputText('naslov');
@@ -72,14 +72,18 @@
                 $this->naslov->addRule('regex', 'Uporabiti smete le črke, številke in presledek.', '/^[a-zA-ZščćžŠČĆŽ 0-9]+$/');
                 $this->naslov->addRule('maxlength', 'Vnos naj bo krajši od 150 znakov.', 150);
                 
-                $this->vrsta_uporabnika = new HTML_QuickForm2_Element_InputText('vrsta_uporabnika');
-                $this->vrsta_uporabnika->setAttribute('size', 20);
-                $this->vrsta_uporabnika->setLabel('Ali se želiš registrirati kot stranka ali prodajalec?');
-                $this->vrsta_uporabnika->addRule('required', 'To je obvezen podatek.');
-                $this->vrsta_uporabnika->addRule('regex', 'Možni vpisi: stranka, prodajalec', '\b(stranka|prodajalec)\b');
-                $this->vrsta_uporabnika->addRule('maxlength', 'Možni vpisi: stranka, prodajalec', 15);
-                
-                
+                $this->uporabnik_vrsta = new HTML_QuickForm2_Element_InputText('uporabnik_vrsta');
+                $this->uporabnik_vrsta->setAttribute('size', 20);
+                $this->uporabnik_vrsta->setLabel('Ali se želiš registrirati kot stranka ali prodajalec?');
+                $this->uporabnik_vrsta->addRule('required', 'To je obvezen podatek.');
+                $this->uporabnik_vrsta->addRule('regex', 'Možni vpisi: stranka, prodajalec', '/\b(stranka|prodajalec)\b/');
+                $this->uporabnik_vrsta->addRule('maxlength', 'Možni vpisi: stranka, prodajalec', 15);
+
+                //$this->vrsta_uporabnika = new HTML_QuickForm2_Element_Select('vrsta_uporabnika');
+                //$this->vrsta_uporabnika->setLabel('Ali se želiš registrirati kot stranka ali prodajalec?');
+                //$this->vrsta_uporabnika->addRule('required', 'To je obvezen podatek.');
+                //$this->vrsta_uporabnika->loadOptions(array('stranka' => 'stranka', 'prodajalec' => 'prodajalec'));
+                //$this->vrsta_uporabnika->addElement($this->vrsta_uporabnika);
                 //-------------------------------------------------------------------------------------------------
                 $this->addElement($this->ime);
                 $this->addElement($this->priimek);
@@ -88,7 +92,7 @@
                 $this->addElement($this->geslo);
                 
                 $this->addElement($this->naslov);
-                $this->addElement($this->vrsta_uporabnika);
+                $this->addElement($this->uporabnik_vrsta);
                 
                 $this->button = new HTML_QuickForm2_Element_InputSubmit(null);
                 $this->button->setAttribute('value', 'Registriracija');

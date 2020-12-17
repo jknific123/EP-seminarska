@@ -86,6 +86,10 @@ $urls = [
         #narocilo-list
         StoreController::orderList();
     },
+    "test" => function () {
+        #testing
+        echo ViewHelper::render("view/prikazi-sporocilo.php");
+    },
     "" => function () { //če ni nič napisano usmeri na prvo stran od trgovine, torej razdelek toys
         ViewHelper::redirect(BASE_URL . "store");
     },
