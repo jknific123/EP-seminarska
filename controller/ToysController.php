@@ -81,13 +81,13 @@ class ToysController {
                 ToysDB::update($data);
                 ViewHelper::redirect(BASE_URL . "toy?id=" . $data["artikel_id"]);
             } else {
-                echo "Submitted";
-                echo ViewHelper::render("view/uredi-izbrisi-artikel.php", [
-                    "form" => $form,
-                    "toy" => $toy
-                ]);
+                       
+                $dataSource = new HTML_QuickForm2_DataSource_Array($toy);
+                $form->addDataSource($dataSource);
+                ViewHelper::redirect(BASE_URL . "toy?id=" . $data["id"]);
             }
         } else { 
+            echo implode(" ",$_POST);
             self::showEditForm($_POST, $form);
         }
     }

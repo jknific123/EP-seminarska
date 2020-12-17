@@ -26,6 +26,7 @@
                 $this->email = new HTML_QuickForm2_Element_InputText('email');
                 $this->email->setAttribute('size',25);
                 $this->email->setLabel('Elektronski naslov: ');
+                $this->email->addRule('required', 'Email je obvezen podatek.');
                 
                 
                 $this->geslo = new HTML_QuickForm2_Element_InputPassword('geslo');

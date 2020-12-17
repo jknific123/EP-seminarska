@@ -54,10 +54,7 @@
                 $this->email->setAttribute('size', 25);
                 $this->email->setLabel('Elektronski naslov:');
                 $this->email->addRule('required', 'Elektronski naslov je obvezen podatek.');
-                $this->email->addRule('callback', 'Vnesite veljaven elektronski naslov.', array( //preveri kako dela - pošlji potrditveni email
-                    'callback' => 'filter_var',
-                    'arguments' => [FILTER_VALIDATE_EMAIL])
-                );
+                
                 
                 $this->geslo = new HTML_QuickForm2_Element_InputPassword('geslo');
                 $this->geslo->setLabel('Izberite geslo:');
@@ -84,18 +81,20 @@
                 
                 
                 //-------------------------------------------------------------------------------------------------
+                $this->addElement($this->ime);
+                $this->addElement($this->priimek);
+        
+                $this->addElement($this->email);
+                $this->addElement($this->geslo);
+                
+                $this->addElement($this->naslov);
+                $this->addElement($this->vrsta_uporabnika);
+                
                 $this->button = new HTML_QuickForm2_Element_InputSubmit(null);
                 $this->button->setAttribute('value', 'Registriracija');
-
-                $this->osebno->addElement($this->ime);
-                $this->osebno->addElement($this->priimek);
-        
-                $this->racun->addElement($this->email);
-                $this->racun->addElement($this->geslo);
+                $this->addElement($this->button);
                 
-                $this->osebno->addElement($this->naslov);
-                $this->osebno->addElement($this->vrsta_uporabnka);
-                //tle bi mejbi mogla dodat še za button
+                
 
                 $this->addRecursiveFilter('trim');
                 $this->addRecursiveFilter('htmlspecialchars');
