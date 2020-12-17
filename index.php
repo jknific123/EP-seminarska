@@ -67,7 +67,7 @@ $urls = [
         ToysController::index();
     },
     "toy/edit" => function () {
-        #uredi-artikel
+        #uredi-izbrisi-artikel
         ToysController::edit();
     },
     "toy/add" => function () {
@@ -75,6 +75,7 @@ $urls = [
         ToysController::add();
     },
     "toy/delete" => function () {
+        #uredi-izbrisi-artikel
         ToysController::delete();
     },
     "order" => function () {

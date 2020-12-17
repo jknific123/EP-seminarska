@@ -57,7 +57,7 @@
         <p> Cena izdelka: <?= number_format($toy["artikel_cena"], 2) ?> EUR </p>
         <button> Dodaj v košarico </button>
         </form>
-        <a href="<?= BASE_URL . "toy" ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php-->
+        <a href="<?= BASE_URL . "toy?id=" . $toy["artikel_id"] ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php-->
     </div>
 
 <?php endforeach; ?>

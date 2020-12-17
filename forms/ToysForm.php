@@ -90,12 +90,7 @@ class ToysDeleteForm extends HTML_QuickForm2 {
 
         $this->id = new HTML_QuickForm2_Element_InputHidden("id");
         $this->addElement($this->id);
-
-        $this->confirmation = new HTML_QuickForm2_Element_InputCheckbox("confirmation");
-        $this->confirmation->setLabel('Delete?');
-        $this->confirmation->addRule('required', 'Tick if you want to delete this toy.');
-        $this->addElement($this->confirmation);
-
+        
         $this->button = new HTML_QuickForm2_Element_InputSubmit(null);
         $this->button->setAttribute('value', 'Izbriši artikel');
         $this->addElement($this->button);

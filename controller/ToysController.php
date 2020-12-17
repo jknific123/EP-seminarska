@@ -10,10 +10,25 @@ require_once("forms/ToysForm.php");
 class ToysController {
 
     public static function index() {
-        if (isset($_GET["id"])) {
-            echo ViewHelper::render("view/uredi-artikel.php", ["toy" => ToysDB::get($_GET["id"])]);
+        $rules = [
+            "id" => [
+                'filter' => FILTER_VALIDATE_INT,
+                'options' => ['min_range' => 1]
+            ]
+        ];
+
+        $data = filter_input_array(INPUT_GET, $rules); //tle dobimo id k je 3
+       
+        if ($data["id"]) {
+            //var_dump($data);
+            //var_dump($data["id"]);
+            //$data_array = ToysDB::get($data);
+            //var_dump($data_array);
+            echo ViewHelper::render("view/uredi-artikel.php", [
+                "toy" => ToysDB::get($data)
+            ]);
         } else {
-            echo ViewHelper::render("view/uredi-artikel.php", ["toys" => ToysDB::getAll()]);
+            echo ViewHelper::render("view/index-trgovina.php", ["toys" => ToysDB::getAll()]);
         }
     }
 
@@ -34,48 +49,69 @@ class ToysController {
         }
     }
  
-    public static function showEditForm($toy = []) {
-        if (empty($toy)) {
-            
-            $toy = ToysDB::get($_GET["id"]); //ID not found 
-        }
+    public static function showEditForm($toy = [], $form) {
         
-        echo ViewHelper::render("view/uredi-artikel.php", ["toy" => $toy]);
+        if (empty($toy)) {
+                $rules = [
+                "id" => [
+                    'filter' => FILTER_VALIDATE_INT,
+                    'options' => ['min_range' => 1]
+                ]
+            ];
+
+            $data = filter_input_array(INPUT_GET, $rules);
+            $toy = ToysDB::get($data);
+        }
+        $dataSource = new HTML_QuickForm2_DataSource_Array($toy);
+        $form->addDataSource($dataSource);
+              
+        echo ViewHelper::render("view/uredi-izbrisi-artikel.php", [
+                "form" => $form,
+                "toy" => $toy
+            ]);
     }
 
     public static function edit() {
-        $editForm = new ToysEditForm("edit_form");
-        $validData = isset($_POST["ime"]) && !empty($_POST["ime"]) &&
-            isset($_POST["cena"]) && !empty($_POST["cena"]) &&
-            isset($_POST["opis"]) && !empty($_POST["opis"]) &&
-            isset($_POST["id"]) && !empty($_POST["id"]);
-        
-
-        if ($validData) {
+        $form = new ToysEditForm("edit_form");
+        if ($form->isSubmitted()) { //popravi vnesene podatke
             
-            ToysDB::update($_POST["id"], $_POST["ime"], $_POST["opis"], $_POST["cena"]);
-            echo ViewHelper::redirect(BASE_URL . "toy?id=" . $_POST["id"]);
-        } else {
-            
-            self::showEditForm($_POST);
+            if ($form->validate()) { //vse ok potrdi spremembe
+                
+                $data = $form->getValue();
+                ToysDB::update($data);
+                ViewHelper::redirect(BASE_URL . "toy?id=" . $data["artikel_id"]);
+            } else {
+                echo "Submitted";
+                echo ViewHelper::render("view/uredi-izbrisi-artikel.php", [
+                    "form" => $form,
+                    "toy" => $toy
+                ]);
+            }
+        } else { 
+            self::showEditForm($_POST, $form);
         }
     }
 
     public static function delete() {
-        $validDelete = isset($_POST["delete_confirmation"]) && isset($_POST["id"]) && !empty($_POST["id"]);
+        $form = new ToysDeleteForm("delete_form");
+        
+        if (!isset($toy)) {
+                $rules = [
+                "id" => [
+                    'filter' => FILTER_VALIDATE_INT,
+                    'options' => ['min_range' => 1]
+                ]
+            ];
 
-        if ($validDelete) {
-            ToysDB::delete($_POST["id"]);
-            $url = BASE_URL . "store";
-        } else {
-            if (isset($_POST["id"])) {
-                $url = BASE_URL . "toy/edit?id=" . $_POST["id"];
-            } else {
-                $url = BASE_URL . "toy";
-            }
+            $data = filter_input_array(INPUT_GET, $rules);
+            $toy = ToysDB::get($data);
         }
-
-        ViewHelper::redirect($url);
+        $dataSource = new HTML_QuickForm2_DataSource_Array($toy);
+        $form->addDataSource($dataSource);
+        
+        echo ViewHelper::redirect(BASE_URL . "store");
+        
     }
-
+    
+    
 }
