@@ -16,7 +16,7 @@
             <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
             <p><?= $toy["artikel_ime"] ?></p>
             <p><?= $toy["artikel_opis"] ?> </p>
-            <p><?= number_format($toy["artikel_cena"], 2) ?> EUR<br/>
+            <p><?= number_format($toy["artikel_cena"], 2) ?> EUR</p>p>
                 <button>Add to cart</button>
                 </form>
         </div>

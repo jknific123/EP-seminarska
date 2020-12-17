@@ -10,6 +10,22 @@ class OrderDB extends AbstractDB {
 
     public static function get(array $id) {
         // za dobit narocilo
+
+        $orders = parent::query("SELECT narocilo_id, narocilo_status, uporabnik_id"
+            . " FROM narocilo"
+            . " WHERE narocilo_id = :narocilo_id", $id);
+
+        if (count($orders) == 1) {
+            return $orders[0];
+        } else {
+            throw new InvalidArgumentException("No such toy");
+        }
+
+    }
+
+    public static function getAll() {
+        //pridobi usa narocila
+        return parent::query("SELECT * FROM narocilo");
     }
 
     public static function update(array $params) {
@@ -28,6 +44,7 @@ class OrderDB extends AbstractDB {
 
         //NAROCILO
         //sql poizvedba za nardit narocilo
+        // TODO: dodat je treba se narocilo_postavka -> $total
         $narocilo = "INSERT INTO narocilo (uporabnik_id, narocilo_status) "
             . " VALUES (:uporabnik_id, :narocilo_status)";
 
@@ -56,17 +73,13 @@ class OrderDB extends AbstractDB {
         $statementArtikelNarocilo->bindParam(":artikelnarocilo_kolicina", $artikelnarocilo_kolicina);
 
         foreach ($cart as $toy) {
-            $artikel_id = $toy[$artikel_id];
-            $artikelnarocilo_kolicina = $toy[$artikelnarocilo_kolicina];
+            $artikel_id = $toy["artikel_id"];
+            $artikelnarocilo_kolicina = $toy["quantity"];
             $statementArtikelNarocilo->execute();
         }
 
     }
 
-    public static function getAll() {
-        //pridobi usa narocila
-        return parent::query("SELECT * FROM narocilo");
-    }
 
     // to more bit tuki drugace je error
     public static function insert(array $params) {

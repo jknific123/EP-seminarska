@@ -2,9 +2,9 @@
 
 <link rel="stylesheet" type="text/css" href="<?= CSS_URL . "style.css" ?>">
 <meta charset="UTF-8" />
-<title>Order checkout</title>
+<title>Zaključi nakup</title>
 
-<h1>Finish your order</h1>
+<h1>Dokončajte vaš nakup</h1>
 
 
 <?php if (!empty($cart)): ?>
@@ -14,7 +14,7 @@
         <?php foreach ($cart as $toy): ?>
 
             <form>
-                <p> <?= $toy["artikel_ime"] ?> <?= number_format($toy["artikel_cena"], 2) ?> EUR  &times; <?= $toy["quantity"] ?></p>
+                <p> <?= $toy["artikel_ime"] ?>, <?= number_format($toy["artikel_cena"], 2) ?> EUR  &times; <?= $toy["quantity"] ?></p>
             </form>
 
         <?php endforeach; ?>

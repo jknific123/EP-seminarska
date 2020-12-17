@@ -25,9 +25,15 @@ class OrderController {
         echo ViewHelper::render("view/potrdi-nakup.php", $vars);
     }
 
+    // to se ne dela ker nimamo se uporabnikov
     public static function createOrder() {
 
+        $cart = Cart::getAll();
+        $uporabnik = $_SESSION["uporabnik"]["uporabnik_id"];
+        OrderDB::create($cart,$uporabnik);
 
+        $message = "Naročilo je bilo uspešno ustvarjeno. Z klikom na gumb Nazaj se lahko vrnete v trgovino in nadaljujete nakupovanje.";
+        echo ViewHelper::render("view/prikazi-sporocilo", $message);
         // routaj nazaj na /store
     }
 
