@@ -5,6 +5,7 @@ session_start();
 require_once("controller/ToysController.php");
 require_once("controller/PeopleController.php");
 require_once("controller/StoreController.php");
+require_once("controller/OrderController.php");
 //tle dodaš vse controllerje, ko jih ustvariš
 
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
@@ -56,7 +57,10 @@ $urls = [
         StoreController::purgeCart();
     },
     "store/potrdi-nakup" => function () {
-        StoreController::finishOrder();
+        OrderController::checkOrder();
+    },
+    "store/ustvari-narocilo" => function () {
+        OrderController::createOrder();
     },
     // tuki ki mas toy/neki mislim da bojo ToysController-funkcije ne pa StoreController -> bom sproti popravu
     "toy/edit" => function () {

@@ -6,7 +6,7 @@ require_once("ViewHelper.php");
 require_once("forms/ToysForm.php");
 
 
-#StoreController: za vse funkcije, ki niso direkt vezane na nekega uporabnika - torej urejanj artiklov, pregledovanje naročil, potrjevanje naročil...
+#StoreController: za vse funkcije, ki niso direkt vezane na nekega uporabnika ali na neko narocilo - torej urejanj artiklov, index trgovine košarica
 # funkcije v zvezi z artikli: dodaj, uredi, izbriši
 #funkcije u zvezi z naročilom in košarico
 class StoreController {
@@ -67,23 +67,5 @@ class StoreController {
         ViewHelper::redirect(BASE_URL . "store");
     }
 
-    public static function finishOrder() {
-
-        $vars = [
-            "toys" => ToysDB::getAll(),
-            "cart" => Cart::getAll(),
-            "total" => Cart::total()
-        ];
-
-        echo ViewHelper::render("view/potrdi-nakup.php", $vars);
-    }
-
-    public static function order() {
-
-    }
-    
-    public static function orderList() {
-
-    }
 
 }

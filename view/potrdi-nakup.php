@@ -14,7 +14,7 @@
         <?php foreach ($cart as $toy): ?>
 
             <form>
-                <p> <?= $toy["artikel_ime"] ?> <?= $toy["artikel_cena"] ?> &times; <?= $toy["quantity"] ?></p>
+                <p> <?= $toy["artikel_ime"] ?> <?= number_format($toy["artikel_cena"], 2) ?> EUR  &times; <?= $toy["quantity"] ?></p>
             </form>
 
         <?php endforeach; ?>
@@ -22,7 +22,7 @@
         <p>Skupaj: <b><?= number_format($total, 2) ?> EUR</b></p>
 
 
-        <form action="<?= BASE_URL . "store" ?>" method="post">
+        <form action="<?= BASE_URL . "store/ustvari-narocilo" ?>" method="post">
             <p><button> Zaključi nakup </button></p>
         </form>
         <form action="<?= BASE_URL . "store" ?>">
