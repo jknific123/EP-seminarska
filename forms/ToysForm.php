@@ -77,6 +77,12 @@ class ToysEditForm extends ToysAbstractForm {
         $this->button->setAttribute('value', 'Uredi artikel');
         $this->id = new HTML_QuickForm2_Element_InputHidden("id");
         $this->addElement($this->id);
+        
+        /*$this->ime->setAttribute("value", $toyData["artikel_ime"]);
+        $this->opis->setValue($toyData["artikel_opis"]);
+        $this->cena->setAttribute("value", $toyData["artikel_cena"]);
+        $this->id->setValue($toyData["artikel_id"]);*/
+ 
     }
 
 }

@@ -25,7 +25,7 @@ class ToysController {
             //$data_array = ToysDB::get($data);
             //var_dump($data_array);
             echo ViewHelper::render("view/uredi-artikel.php", [
-                "toy" => ToysDB::get($data)
+                "toy" => ToysDB::get($data["id"])
             ]);
         } else {
             echo ViewHelper::render("view/index-trgovina.php", ["toys" => ToysDB::getAll()]);
@@ -49,21 +49,23 @@ class ToysController {
         }
     }
  
-    public static function showEditForm($toy = [], $form) {
+    // Use with data sources
+    private static function convertParamNames($toy) {
+        $toy = [
+            "id" => $toy["artikel_id"],
+            "ime" => $toy["artikel_ime"],
+            "cena" => $toy["artikel_cena"],
+            "opis" => $toy["artikel_opis"],
+        ];
         
-        if (empty($toy)) {
-                $rules = [
-                "id" => [
-                    'filter' => FILTER_VALIDATE_INT,
-                    'options' => ['min_range' => 1]
-                ]
-            ];
+        return $toy;
+    }
 
-            $data = filter_input_array(INPUT_GET, $rules);
-            $toy = ToysDB::get($data);
-        }
-        $dataSource = new HTML_QuickForm2_DataSource_Array($toy);
-        $form->addDataSource($dataSource);
+    public static function showEditForm($toy, $form) {
+        
+       
+        //$dataSource = new HTML_QuickForm2_DataSource_Array($toy);
+        //$form->addDataSource($dataSource);
               
         echo ViewHelper::render("view/uredi-izbrisi-artikel.php", [
                 "form" => $form,
@@ -72,42 +74,37 @@ class ToysController {
     }
 
     public static function edit() {
-        $form = new ToysEditForm("edit_form");
-        if ($form->isSubmitted()) { //popravi vnesene podatke
-            
-            if ($form->validate()) { //vse ok potrdi spremembe
+        //var_dump($_GET);
+        //var_dump($_POST);exit();
+        $toyId = isset($_GET["id"]) ? $_GET["id"] : $_POST["id"];
                 
-                $data = $form->getValue();
-                ToysDB::update($data);
-                ViewHelper::redirect(BASE_URL . "toy?id=" . $data["artikel_id"]);
-            } else {
-                       
-                $dataSource = new HTML_QuickForm2_DataSource_Array($toy);
-                $form->addDataSource($dataSource);
-                ViewHelper::redirect(BASE_URL . "toy?id=" . $data["id"]);
-            }
+        $toyData = ToysDB::get($toyId);
+        if ($toyData === null) {
+            ViewHelper::redirect(BASE_URL . "store");
+        }
+        //var_dump($toyData);exit();
+        $form = new ToysEditForm("edit_form");
+            
+        if ($form->isSubmitted() && $form->validate()) { //popravi vnesene podatke
+            
+            $data = $form->getValue();
+            ToysDB::update($data);
+            ViewHelper::redirect(BASE_URL . "toy?id=" . $data["id"]);
+  
         } else { 
-            echo implode(" ",$_POST);
-            self::showEditForm($_POST, $form);
+            //echo implode(" ",$_POST);
+           $dataSource = new HTML_QuickForm2_DataSource_Array(self::convertParamNames($toyData));
+           $form->addDataSource($dataSource);
+                
+           self::showEditForm($toyData, $form);
         }
     }
 
     public static function delete() {
         $form = new ToysDeleteForm("delete_form");
         
-        if (!isset($toy)) {
-                $rules = [
-                "id" => [
-                    'filter' => FILTER_VALIDATE_INT,
-                    'options' => ['min_range' => 1]
-                ]
-            ];
-
-            $data = filter_input_array(INPUT_GET, $rules);
-            $toy = ToysDB::get($data);
-        }
-        $dataSource = new HTML_QuickForm2_DataSource_Array($toy);
-        $form->addDataSource($dataSource);
+        $toyId = $_GET["id"];
+        ToysDB::delete($toyId);
         
         echo ViewHelper::redirect(BASE_URL . "store");
         

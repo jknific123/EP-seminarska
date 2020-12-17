@@ -28,7 +28,7 @@ class StoreController {
 
         if (isset($data["id"])) {
             echo ViewHelper::render("view/uredi-artikel.php", [
-                "toy" => ToysDB::get($data)
+                "toy" => ToysDB::get($data["id"])
             ]);
         } else {
             echo ViewHelper::render("view/index-trgovina.php", $vars);

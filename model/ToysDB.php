@@ -18,22 +18,23 @@ class ToysDB extends AbstractDB {
                         . " WHERE artikel_id = :id", $params);
     }
 
-    public static function delete(array $id) {
-        return parent::modify("DELETE FROM artikel WHERE artikel_id = :id", $id);
+    public static function delete($id) {
+        return parent::modify("DELETE FROM artikel WHERE artikel_id = :id", ["id" => $id]);
     }
 
-    public static function get(array $id) {
+    public static function get($id) {
         $toys = parent::query("SELECT artikel_id, artikel_ime, artikel_cena, artikel_opis"
                         . " FROM artikel"
-                        . " WHERE artikel_id = :id", $id);
+                        . " WHERE artikel_id = :id", ["id" => $id]);
         
         if (count($toys) == 1) {
             return $toys[0];
         } else {
-            throw new InvalidArgumentException("No such toy");
+            return null;
         }
     }
-
+    
+    
     public static function getAll() {
         return parent::query("SELECT artikel_id, artikel_ime, artikel_cena, artikel_opis"
                         . " FROM artikel"

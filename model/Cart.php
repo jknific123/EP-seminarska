@@ -24,7 +24,7 @@ class Cart {
     }
 
     public static function add($id) {
-        $toy = ToysDB::get(array("id" => $id));
+        $toy = ToysDB::get($id);
 
         if ($toy != null) {
             if (isset($_SESSION["cart"][$id])) { //ce je ze v kosarici samo ++
@@ -37,7 +37,7 @@ class Cart {
     }
 
     public static function update($id, $quantity) {
-        $toy = ToysDB::get(array("id" => $id));
+        $toy = ToysDB::get($id);
         $quantity = intval($quantity);
 
         if ($toy != null) {
