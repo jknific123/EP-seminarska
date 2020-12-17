@@ -4,29 +4,28 @@ require_once("model/ToysDB.php");
 require_once("ViewHelper.php");
 require_once("forms/ToysForm.php");
 
-// skopirano iz cart-mvc projekta, ce kej dodate dejte pls comment zraven da se ve
-// BookDB sem spremenil v ToysDB, ostalo je treba se popravit
+// skopirano iz cart-mvc projekta
+
 
 class ToysController {
 
     public static function index() {
         if (isset($_GET["id"])) {
-            ViewHelper::render("view/book-detail.php", ["book" => ToysDB::get($_GET["id"])]);
+            echo ViewHelper::render("view/uredi-artikel.php", ["toy" => ToysDB::get($_GET["id"])]);
         } else {
-            ViewHelper::render("view/book-list.php", ["books" => ToysDB::getAll()]);
+            echo ViewHelper::render("view/uredi-artikel.php", ["toys" => ToysDB::getAll()]);
         }
     }
 
-    public static function showAddForm($values) {
+    public static function showAddForm($values) { //ta dela
         echo ViewHelper::render("view/dodaj-artikel.php", $values);
     }
 
-    public static function add() {
+    public static function add() { //ta dela
         $form = new ToysInsertForm("new_toy");
         
         if ($form->validate()) {
-            $id = ToysDB::insert($form->getValue());     
-            // TODO: redirect to /view/uredi-artikel.php?id=$id ??
+            $id = ToysDB::insert($form->getValue());
             ViewHelper::redirect(BASE_URL . "store");
         } else { // GET request or invalid data - show form
             self::showAddForm([
@@ -35,25 +34,29 @@ class ToysController {
         }
     }
  
-    public static function showEditForm($book = []) {
-        if (empty($book)) {
-            $book = ToysDB::get($_GET["id"]);
+    public static function showEditForm($toy = []) {
+        if (empty($toy)) {
+            
+            $toy = ToysDB::get($_GET["id"]); //ID not found 
         }
-
-        ViewHelper::render("view/book-edit.php", ["book" => $book]);
+        
+        echo ViewHelper::render("view/uredi-artikel.php", ["toy" => $toy]);
     }
 
     public static function edit() {
-        $validData = isset($_POST["author"]) && !empty($_POST["author"]) &&
-            isset($_POST["title"]) && !empty($_POST["title"]) &&
-            isset($_POST["price"]) && !empty($_POST["price"]) &&
-            isset($_POST["year"]) && !empty($_POST["year"]) &&
+        $editForm = new ToysEditForm("edit_form");
+        $validData = isset($_POST["ime"]) && !empty($_POST["ime"]) &&
+            isset($_POST["cena"]) && !empty($_POST["cena"]) &&
+            isset($_POST["opis"]) && !empty($_POST["opis"]) &&
             isset($_POST["id"]) && !empty($_POST["id"]);
+        
 
         if ($validData) {
-            ToysDB::update($_POST["id"], $_POST["author"], $_POST["title"], $_POST["price"], $_POST["year"]);
-            ViewHelper::redirect(BASE_URL . "book?id=" . $_POST["id"]);
+            
+            ToysDB::update($_POST["id"], $_POST["ime"], $_POST["opis"], $_POST["cena"]);
+            echo ViewHelper::redirect(BASE_URL . "toy?id=" . $_POST["id"]);
         } else {
+            
             self::showEditForm($_POST);
         }
     }
@@ -63,12 +66,12 @@ class ToysController {
 
         if ($validDelete) {
             ToysDB::delete($_POST["id"]);
-            $url = BASE_URL . "book";
+            $url = BASE_URL . "store";
         } else {
             if (isset($_POST["id"])) {
-                $url = BASE_URL . "book/edit?id=" . $_POST["id"];
+                $url = BASE_URL . "toy/edit?id=" . $_POST["id"];
             } else {
-                $url = BASE_URL . "book";
+                $url = BASE_URL . "toy";
             }
         }
 

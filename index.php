@@ -62,7 +62,10 @@ $urls = [
     "store/ustvari-narocilo" => function () {
         OrderController::createOrder();
     },
-    // tuki ki mas toy/neki mislim da bojo ToysController-funkcije ne pa StoreController -> bom sproti popravu
+    "toy" => function () {
+        #uredi-artikel
+        ToysController::index();
+    },
     "toy/edit" => function () {
         #uredi-artikel
         ToysController::edit();

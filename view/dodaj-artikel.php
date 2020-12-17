@@ -5,7 +5,7 @@
 <title>Dodaj artikel</title>
 
 <h1>Dodaj artikel</h1>
-<!-- TODO: prodajalec doda artikel v trgovino -->
+<!-- prodajalec doda artikel v trgovino -->
 
 <?= $form ?>
 

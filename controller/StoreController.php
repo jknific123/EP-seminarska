@@ -7,8 +7,7 @@ require_once("forms/ToysForm.php");
 
 
 #StoreController: za vse funkcije, ki niso direkt vezane na nekega uporabnika ali na neko narocilo - torej urejanj artiklov, index trgovine košarica
-# funkcije v zvezi z artikli: dodaj, uredi, izbriši
-#funkcije u zvezi z naročilom in košarico
+
 class StoreController {
 
     public static function index() {

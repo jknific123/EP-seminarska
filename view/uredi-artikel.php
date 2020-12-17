@@ -4,25 +4,20 @@
 <meta charset="UTF-8" />
 <title>Artikel</title>
 
-<h1>Artikel</h1>
+<h1>Artikel <?= $toy["ime"] ?></h1>
 
 <div>
-    <p> Ime izdelka: <?php $name ?> </p>
-    <p> Opis izdelka: <?php $opis ?> </p>
-    <p> Cena izdelka: <?php $cena ?> </p>
+    <p>Ime: <?= $toy["ime"] ?></p>
+    <p>Cena: <?= $toy["cena"] ?> EUR</p>
+    <p>Opis: <?= $toy["opis"] ?></p>
     <!--tle dodaj še povezavo na slike izdelka -->
 </div>
 
 <?php // else ($uporabnik == "prodajalec") : ?>
-    <!-- TODO implementiraj možnost spreminjanja atributov -->
     
+    <a href="<?= BASE_URL . "toy/edit" ?>"> <button>Uredi artikel </button></a>
+    <a href="<?= BASE_URL . "toy/delete" ?>"> <button> Izbriši artikel </button></a> <br>
     
-    
-    
-    
-    
-    <button> Izbriši artikel </button> <!--TODO artikel ni več na voljo v trgovini-->
 <?php //endif; ?>
     
-<a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>
-
+<a href="<?= BASE_URL . "" ?>"> Vrni se na prvo stran </a>
