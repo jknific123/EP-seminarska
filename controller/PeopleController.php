@@ -28,13 +28,14 @@ class PeopleController {
             try {
                 $data = $form->getValue();
                 $email = $data["email"];
-                $hash = UserDB::getPass($email);
-                $valid = password_verify($data["geslo"] ,$hash);
-                $uporabnik = UserDB::getUporabnik($data["email"]);
+                $hash = UserDB::getPass(["email" => $email]);
+                var_dump($hash["uporabnik_geslo"]);
+                $valid = password_verify($data["geslo"] ,$hash["uporabnik_geslo"]);
+                $uporabnik = UserDB::getUporabnik(["email" => $email]);
                 if ($valid) { //je ok geslo gremo ga loginat
 
                     if ($uporabnik) { //loginamo uporabnika tuki preverimo tut aktiviranost
-                        $_SESSION["uporabnik"] = $uporabnik;
+                        $_SESSION["uporabnik"] = $uporabnik; // tko ga prijavim vsi uporabnikovi atributi so dosegljivi na $_SESSION["uporabnik"]["atribut"]
                         ViewHelper::redirect(BASE_URL . "store");
                     }
                     else { //uporabnika ni najdlo

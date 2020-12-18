@@ -14,7 +14,9 @@
 </div>
 
 <div>
-    <?php //if ($uporabnik == "stranka") : ?>
+    <?php if ($_SESSION["uporabnik"]["uporabnik_vrsta"] == "stranka") :
+    //var_dump($_SESSION["uporabnik"]);
+    ?>
     <p> Stranka: </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "order/list" ?>"> <button> Vsa moja naročila </button></a> <!--narocilo-list.php-->
@@ -24,7 +26,7 @@
     </a>
     <br>
 
-<!--<?php //elseif ($uporabnik == "prodajalec") : ?>-->
+<!--<?php elseif ($_SESSION["uporabnik"]["uporabnik_vrsta"] == "prodajalec") : ?>-->
 <p> Prodajalec </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "order/list" ?>"> <button> Vsa moja naročila </button></a> <!--narocilo-list.php-->
@@ -34,7 +36,7 @@
         <button> Odjava </button> <!--treba spremenit uporabnika nazaj na anonimnega userja -->
     </a> <br>
     <p> Admin </p>
-<!--<?php //elseif ($uporabnik == "admin") : ?>-->
+<!--<?php elseif ($_SESSION["uporabnik"]["uporabnik_vrsta"] == "admin") : ?>-->
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "admin" ?>"><button> Vsi prodajalci </button></a> <!--admin-view.php-->
     <a href="<?= BASE_URL . "" ?>">
@@ -42,10 +44,10 @@
     </a>
     <br>
     <p> Anonimni </p>
-<!--<?php //else: ?> anonimni user-->
+<!--<?php else: ?> anonimni user-->
     <a href="<?= BASE_URL . "log-in" ?>"><button> Prijava </button></a> <!--log-in.php-->
     <a href="<?= BASE_URL . "sign-in" ?>"><button> Registracija </button></a> <!--sign-in.php-->
-<!--<?php //endif; ?>-->
+<!--<?php endif; ?>-->
 </div>
 
 <div id="main">
