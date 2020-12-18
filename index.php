@@ -31,6 +31,10 @@ $urls = [
         #log-in
         PeopleController::login();
     },
+    "log-out" => function () {
+        #log-out
+        PeopleController::logout();
+    },
     "sign-in" => function () {
         #sign-in
         PeopleController::signin();

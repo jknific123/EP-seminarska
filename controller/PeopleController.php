@@ -32,21 +32,25 @@ class PeopleController {
                 var_dump($hash["uporabnik_geslo"]);
                 $valid = password_verify($data["geslo"] ,$hash["uporabnik_geslo"]);
                 $uporabnik = UserDB::getUporabnik(["email" => $email]);
+                var_dump($valid);
+                var_dump($uporabnik);
                 if ($valid) { //je ok geslo gremo ga loginat
 
                     if ($uporabnik) { //loginamo uporabnika tuki preverimo tut aktiviranost
                         $_SESSION["uporabnik"] = $uporabnik; // tko ga prijavim vsi uporabnikovi atributi so dosegljivi na $_SESSION["uporabnik"]["atribut"]
+                        var_dump($_SESSION["uporabnik"]);
                         ViewHelper::redirect(BASE_URL . "store");
                     }
                     else { //uporabnika ni najdlo
-                        echo ViewHelper::render("view/prikazi-sporocilo.php", "Ta uporabnik ne obstaja.");
+                        $message = "Ta uporabnik ne obstaja.";
+                        echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Ta uporabnik ne obstaja."]);
                     }
                 }
                 else {//geslo je napacno
-                    echo ViewHelper::render("view/prikazi-sporocilo.php", "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!");
+                    $message = "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!";
+                    echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!"]);
                 }
 
-                UserDB::preveri( $data['email'], $data['geslo']);
                 echo ViewHelper::redirect(BASE_URL . "store");;
             } catch (PDOException $exc) {
                 echo "Napaka pri prijavi.";
@@ -55,7 +59,12 @@ class PeopleController {
         } else {
             echo $form;
         }
-        
+    }
+
+    public static function logout() {
+        unset($_SESSION["uporabnik"]);
+        session_destroy(); // sam unicimo sejo in je logoutan
+        echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Uporabnik je bil uspešno odjavljen."]);
     }
 
     //registracija

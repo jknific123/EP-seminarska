@@ -10,10 +10,7 @@ class UserDB extends AbstractDB
 {
 
 
-    public static function preveri($email, $geslo)
-    {
 
-    }
 
     public static function getUporabnik(array $email)
     {
