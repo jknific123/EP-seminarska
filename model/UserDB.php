@@ -55,7 +55,7 @@ class UserDB extends AbstractDB
     public static function update(array $params)
     {
         //zaenkrat samo ime priimek in email ker se razlikujejo uporabniki
-        return parent::modify("UPDATE uporabnik SET uporabnik_ime = :ime, uporabnik_priimek = :priimek, uporabnik_email = :email "
+        return parent::modify("UPDATE uporabnik SET uporabnik_ime = :ime, uporabnik_priimek = :priimek, uporabnik_email = :email, uporabnik_geslo = :geslo, uporabnik_naslov = :naslov, uporabnik_vrsta = :uporabnik_vrsta"
             . " WHERE uporabnik_id = :id", $params);
     }
 
