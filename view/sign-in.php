@@ -6,6 +6,8 @@
 
 <h1>Registracija</h1>
 
+<a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>
+
 <!-- tukaj se uporabnik registrira -->
 
 
@@ -13,4 +15,4 @@
 
 <?= isset($errorMessage) ? $errorMessage : "" ?>
 
-<a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>
+

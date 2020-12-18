@@ -50,7 +50,7 @@ class PeopleController {
                     $message = "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!";
                     echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!"]);
                 }
-
+                
                 echo ViewHelper::redirect(BASE_URL . "store");;
             } catch (PDOException $exc) {
                 echo "Napaka pri prijavi.";
@@ -69,7 +69,7 @@ class PeopleController {
 
     //registracija
     public static function signin() {
-        $form = new RegisterForm("new_user");
+        $form = new RegisterInsertForm("new_user");
         if ($form->validate()) {
             try {
                 $data = $form->getValue();
@@ -98,7 +98,42 @@ class PeopleController {
         }
     }
     
+    public static function showUserForm($userData, $form) {
+             
+        //$dataSource = new HTML_QuickForm2_DataSource_Array($toy);
+        //$form->addDataSource($dataSource);
+              
+        echo ViewHelper::render("view/update-my-data.php", [
+                "form" => $form,
+                "userData" => $userData
+            ]);
+    }
+    
     public static function changeMyData() {
+        $userId = $_SESSION["uporabnik"]["uporabnik_id"];
+        //$userId = isset($_GET["id"]) ? $_GET["id"] : $_POST["id"];
+        //var_dump($userId);
+                
+        $userData = UserDB::get($userId); //dobiš podatke iz baze
+        
+        if ($userData === null) {
+            ViewHelper::redirect(BASE_URL . "store");
+        }
+        
+        $form = new RegisterEditForm("edit_form");
+            
+        if ($form->isSubmitted() && $form->validate()) { //popravi vnesene podatke
+            
+            $data = $form->getValue();
+            UserDB::update($data);
+            ViewHelper::redirect(BASE_URL . "store"); //ko so spremenjeni podatki me vrne na isto stran
+  
+        } else { 
+           $dataSource = new HTML_QuickForm2_DataSource_Array($userData);
+           $form->addDataSource($dataSource);
+                
+           self::showUserForm($userData, $form);
+        }
 
     }
     

@@ -79,21 +79,16 @@ class UserDB extends AbstractDB
             . " VALUES (:ime, :cena, :opis)", $params);
     }
 
+    public static function get($id)
+    {    $uporabnik = parent::query("SELECT * "
+            . " FROM uporabnik"
+            . " WHERE uporabnik_id = :id", ["id" => $id]);
 
-    public static function get(array $id)
-    {
-        $toys = parent::query("SELECT artikel_id, artikel_ime, artikel_cena, artikel_opis"
-            . " FROM artikel"
-            . " WHERE artikel_id = :id", $id);
-
-        if (count($toys) == 1) {
-            return $toys[0];
-        } else {
-            throw new InvalidArgumentException("No such toy");
+        //var_dump($uporabnik);
+        if (count($uporabnik) == 1) { //smo ga najdli
+            return $uporabnik[0];
+        }else {
+            return null;
         }
     }
-
-
-
-
 }

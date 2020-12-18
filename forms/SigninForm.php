@@ -18,7 +18,7 @@
     //implementacija registracije z uporabo potrditvenega emaila
     //implementacija registracije strank z uporabo filtriranja CAPTCHA
     
-    class RegisterForm extends HTML_QuickForm2 {
+    class RegisterAbstractForm extends HTML_QuickForm2 {
         public $ime;
         public $priimek;
         
@@ -67,9 +67,8 @@
                 
                 $this->naslov = new HTML_QuickForm2_Element_InputText('naslov');
                 $this->naslov->setAttribute('size', 25);
-                $this->naslov->setLabel('Ulica in hišna številka:');
-                $this->naslov->addRule('required', 'To je obvezen podatek.');
-                $this->naslov->addRule('regex', 'Uporabiti smete le črke, številke in presledek.', '/^[a-zA-ZščćžŠČĆŽ 0-9]+$/');
+                $this->naslov->setLabel('Naslov:');
+                $this->naslov->addRule('required', 'Prosimo, da vpišete ulico, hišno št., pošto in poštno št..');
                 $this->naslov->addRule('maxlength', 'Vnos naj bo krajši od 150 znakov.', 150);
                 
                 $this->uporabnik_vrsta = new HTML_QuickForm2_Element_InputText('uporabnik_vrsta');
@@ -103,6 +102,29 @@
                 $this->addRecursiveFilter('trim');
                 $this->addRecursiveFilter('htmlspecialchars');
         }
-        
     }
+    
+    class RegisterInsertForm extends RegisterAbstractForm {
+
+        public function __construct($id) {
+            parent::__construct($id);
+
+            $this->button->setAttribute('value', 'Registracija');
+        }
+
+    }
+    class RegisterEditForm extends RegisterAbstractForm {
+
+        public $id;
+
+        public function __construct($id) {
+            parent::__construct($id);
+
+            $this->button->setAttribute('value', 'Uredi podatke');
+            $this->id = new HTML_QuickForm2_Element_InputHidden("id"); //tle bo treba dat id od $_SESSION["uporabnik"]
+            $this->addElement($this->id);
+        }
+
+    }
+    
     
