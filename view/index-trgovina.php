@@ -14,8 +14,9 @@
 </div>
 
 <div>
-    <?php if (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "stranka") :
-    var_dump($_SESSION["uporabnik"]);
+    <?php
+    if (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "stranka") :
+        var_dump($_SESSION["uporabnik"]); // to je samo za lazji debug
     ?>
     <p> Stranka: </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
@@ -26,25 +27,33 @@
     </a>
     <br>
 
-    <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "prodajalec") : ?>
+    <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "prodajalec") :
+        var_dump($_SESSION["uporabnik"]);
+    ?>
     <p> Prodajalec </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "order/list" ?>"> <button> Vsa moja naročila </button></a> <!--narocilo-list.php-->
     <a href="<?= BASE_URL . "users" ?>"> <button> Vse stranke </button></a> <!--seznam-strank.php-->
     <a href="<?= BASE_URL . "toy/add" ?>"> <button> Dodaj nov artikel </button></a> <!--dodaj-artikel.php-->
-    <a href="<?= BASE_URL . "" ?>"> 
+    <a href="<?= BASE_URL . "log-out" ?>">
         <button> Odjava </button> <!--treba spremenit uporabnika nazaj na anonimnega userja -->
     </a> <br>
 <!--
-    <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "admin") : ?>-->
+    <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "admin") :
+        var_dump($_SESSION["uporabnik"]);
+    ?>-->
     <p> Admin </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "admin" ?>"><button> Vsi prodajalci </button></a> <!--admin-view.php-->
-    <a href="<?= BASE_URL . "" ?>">
+    <a href="<?= BASE_URL . "log-out" ?>">
         <button> Odjava </button> <!--treba spremenit uporabnika nazaj na anonimnega userja -->
     </a>
     <br>
-    <?php else: ?>
+    <?php else:
+        if (isset($_SESSION["uporabnik"])) :
+            var_dump($_SESSION["uporabnik"]);
+        endif;
+    ?>
     <p> Anonimni uporabnik </p>
     <a href="<?= BASE_URL . "log-in" ?>"><button> Prijava </button></a> <!--log-in.php-->
     <a href="<?= BASE_URL . "sign-in" ?>"><button> Registracija </button></a> <!--sign-in.php-->
