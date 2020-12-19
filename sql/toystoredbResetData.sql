@@ -12,13 +12,13 @@ TRUNCATE artikelnarocilo;
 
 -- za varnost so gesla hashana. #TODO HASH.. -> vsa gesla so zdej zahashana in vsa so ista = geslo12345
 INSERT INTO uporabnik(uporabnik_ime, uporabnik_priimek, uporabnik_email, uporabnik_geslo, uporabnik_naslov, uporabnik_vrsta) 
-VALUES ("Nika", "Kralj", "nikak@gmail.com", "$2y$10$I1XVeKqIq6G5AN8PMvND0.u.yCkDhtlqwa9AuB0upS1in3DJM/RH6 ", "Kanal 100", "administrator");
+VALUES ("Nika", "Kralj", "nikak@gmail.com", "$2y$10$LIDJgEBfxp3yO7OOXp0XXO1W4Vg2dIKCxyl75na5Eiu2PCSh/YwI2", "Kanal 100", "administrator");
 
 INSERT INTO uporabnik(uporabnik_ime, uporabnik_priimek, uporabnik_email, uporabnik_geslo, uporabnik_naslov, uporabnik_vrsta) 
-VALUES ("Gašper", "Kirbiš", "kirba@gmail.com", "$2y$10$I1XVeKqIq6G5AN8PMvND0.u.yCkDhtlqwa9AuB0upS1in3DJM/RH6 ", "Trojica 123", "stranka");
+VALUES ("Gašper", "Kirbiš", "kirba@gmail.com", "$2y$10$LIDJgEBfxp3yO7OOXp0XXO1W4Vg2dIKCxyl75na5Eiu2PCSh/YwI2", "Trojica 123", "stranka");
 
 INSERT INTO uporabnik(uporabnik_ime, uporabnik_priimek, uporabnik_email, uporabnik_geslo, uporabnik_naslov, uporabnik_vrsta) 
-VALUES ("Jernej", "Knific", "knifo@gmail.com", "$2y$10$I1XVeKqIq6G5AN8PMvND0.u.yCkDhtlqwa9AuB0upS1in3DJM/RH6 ", "Slovenski naslov 99", "prodajalec");
+VALUES ("Jernej", "Knific", "knifo@gmail.com", "$2y$10$LIDJgEBfxp3yO7OOXp0XXO1W4Vg2dIKCxyl75na5Eiu2PCSh/YwI2 ", "Slovenski naslov 99", "prodajalec");
 
 -- vstavljanje nekaj zacetnik artiklov.
 
