@@ -38,7 +38,7 @@
         <button> Odjava </button> <!--treba spremenit uporabnika nazaj na anonimnega userja -->
     </a> <br>
 <!--
-    <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "admin") :
+    <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "administrator") :
         var_dump($_SESSION["uporabnik"]);
     ?>-->
     <p> Admin </p>
