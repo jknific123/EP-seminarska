@@ -57,7 +57,9 @@ class PeopleController {
                 var_dump($exc);
             }
         } else {
-            echo $form;
+            echo ViewHelper::render("view/log-in.php"), [
+		"form" => $form,
+		]);
         }
     }
 
@@ -94,7 +96,9 @@ class PeopleController {
                 var_dump($exc);
             }
         } else {
-            echo $form;
+            echo ViewHelper::render("view/sign-in.php"), [
+		"form" => $form,
+		]);
         }
     }
     
