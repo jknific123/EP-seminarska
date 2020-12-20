@@ -40,6 +40,7 @@ class PeopleController {
                         if ($uporabnik) { //loginamo uporabnika tuki preverimo tut aktiviranost
                             $_SESSION["uporabnik"] = $uporabnik; // tko ga prijavim vsi uporabnikovi atributi so dosegljivi na $_SESSION["uporabnik"]["atribut"]
                             var_dump($_SESSION["uporabnik"]);
+                            session_regenerate_id(); # varnost. tako prijavljeni uporabnik pridobi nov id seje!
                             ViewHelper::redirect(BASE_URL . "store");
                         }
                         else { //uporabnika ni najdlo
