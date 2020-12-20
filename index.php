@@ -66,9 +66,9 @@ $urls = [
     "order/ustvari-narocilo" => function () {
         OrderController::createOrder();
     },
-    "order" => function () {
+    "order/listAll" => function () {
         #narocilo-detail
-        OrderController::order();
+        OrderController::orderListAll();
     },
     "order/list" => function () {
         #narocilo-list

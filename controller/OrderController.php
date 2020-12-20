@@ -51,4 +51,12 @@ class OrderController {
         echo ViewHelper::render("view/moja-narocila.php", ["narocila" => $narocila]);
     }
 
+    public static function orderListAll() {
+
+        $narocila = OrderDB::getAll(); //vsa narocila iz baze
+        //var_dump($narocila);
+
+        echo ViewHelper::render("view/prodajalec-narocila.php", ["narocila" => $narocila]);
+    }
+
 }
