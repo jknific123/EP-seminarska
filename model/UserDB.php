@@ -38,7 +38,9 @@ class UserDB extends AbstractDB
         if (count($pass) == 1) {
             return $pass[0];
         } else {
-            throw new InvalidArgumentException("No such password");
+            //throw new InvalidArgumentException("No such password");
+            // ce ne najde gesla za ta email pol ta uporabnik sploh ne obstaja
+            return false;
         }
 
     }

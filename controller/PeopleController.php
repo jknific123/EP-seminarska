@@ -29,37 +29,41 @@ class PeopleController {
                 $data = $form->getValue();
                 $email = $data["email"];
                 $hash = UserDB::getPass(["email" => $email]);
-                var_dump($hash["uporabnik_geslo"]);
-                $valid = password_verify($data["geslo"] ,$hash["uporabnik_geslo"]);
-                $uporabnik = UserDB::getUporabnik(["email" => $email]);
-                var_dump($valid);
-                var_dump($uporabnik);
-                if ($valid) { //je ok geslo gremo ga loginat
+                if ($hash) { // ali sploh najde uporabnika z tem emailo, da pol lahko najde njegovo geslo
+                    var_dump($hash["uporabnik_geslo"]);
+                    $valid = password_verify($data["geslo"] ,$hash["uporabnik_geslo"]);
+                    $uporabnik = UserDB::getUporabnik(["email" => $email]); // tuki dejansko pridobimo tega uporabnika
+                    var_dump($valid);
+                    var_dump($uporabnik);
+                    if ($valid) { //je ok geslo gremo ga loginat
 
-                    if ($uporabnik) { //loginamo uporabnika tuki preverimo tut aktiviranost
-                        $_SESSION["uporabnik"] = $uporabnik; // tko ga prijavim vsi uporabnikovi atributi so dosegljivi na $_SESSION["uporabnik"]["atribut"]
-                        var_dump($_SESSION["uporabnik"]);
-                        ViewHelper::redirect(BASE_URL . "store");
+                        if ($uporabnik) { //loginamo uporabnika tuki preverimo tut aktiviranost
+                            $_SESSION["uporabnik"] = $uporabnik; // tko ga prijavim vsi uporabnikovi atributi so dosegljivi na $_SESSION["uporabnik"]["atribut"]
+                            var_dump($_SESSION["uporabnik"]);
+                            ViewHelper::redirect(BASE_URL . "store");
+                        }
+                        else { //uporabnika ni najdlo
+                            echo ViewHelper::render("view/log-in.php", ["form" => $form,  "errorMessage" => "Ta uporabnik ne obstaja."]);
+                            //echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Ta uporabnik ne obstaja."]);
+                        }
                     }
-                    else { //uporabnika ni najdlo
-                        $message = "Ta uporabnik ne obstaja.";
-                        echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Ta uporabnik ne obstaja."]);
+                    else {//geslo je napacno
+                        echo ViewHelper::render("view/log-in.php", ["form" => $form, "errorMessage" => "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!"]);
+                        ///echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!"]);
                     }
                 }
-                else {//geslo je napacno
-                    $message = "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!";
-                    echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!"]);
+                else { //email je narobe oz uporabnik z tem emailom ne obstaja
+                    echo ViewHelper::render("view/log-in.php", ["form" => $form, "errorMessage" => "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!"]);
                 }
                 
-                echo ViewHelper::redirect(BASE_URL . "store");;
+                //echo ViewHelper::redirect(BASE_URL . "store");
             } catch (PDOException $exc) {
                 echo "Napaka pri prijavi.";
                 var_dump($exc);
             }
         } else {
-            echo ViewHelper::render("view/log-in.php", [
-		"form" => $form,
-		]);
+            //echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Try ni ratal."]);
+            echo ViewHelper::render("view/log-in.php", ["form" => $form]); //, "errorMessage" => "Kaj se dogaja??"
         }
     }
 

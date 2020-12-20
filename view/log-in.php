@@ -13,4 +13,6 @@
 
 <?= isset($errorMessage) ? $errorMessage : "" ?>
 
-<a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>
+<form action="<?= BASE_URL . "" ?>">
+    <button> Nazaj </button>
+</form>

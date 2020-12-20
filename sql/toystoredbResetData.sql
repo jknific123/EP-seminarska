@@ -18,7 +18,7 @@ INSERT INTO uporabnik(uporabnik_ime, uporabnik_priimek, uporabnik_email, uporabn
 VALUES ("Gašper", "Kirbiš", "kirba@gmail.com", "$2y$10$LIDJgEBfxp3yO7OOXp0XXO1W4Vg2dIKCxyl75na5Eiu2PCSh/YwI2", "Trojica 123", "stranka");
 
 INSERT INTO uporabnik(uporabnik_ime, uporabnik_priimek, uporabnik_email, uporabnik_geslo, uporabnik_naslov, uporabnik_vrsta) 
-VALUES ("Jernej", "Knific", "knifo@gmail.com", "$2y$10$LIDJgEBfxp3yO7OOXp0XXO1W4Vg2dIKCxyl75na5Eiu2PCSh/YwI2 ", "Slovenski naslov 99", "prodajalec");
+VALUES ("Jernej", "Knific", "knifo@gmail.com", "$2y$10$LIDJgEBfxp3yO7OOXp0XXO1W4Vg2dIKCxyl75na5Eiu2PCSh/YwI2", "Slovenski naslov 99", "prodajalec");
 
 -- vstavljanje nekaj zacetnik artiklov.
 
