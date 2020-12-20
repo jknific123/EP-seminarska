@@ -29,11 +29,12 @@ class OrderController {
     public static function createOrder() {
 
         $cart = Cart::getAll();
-        $uporabnik = $_SESSION["uporabnik"]["uporabnik_id"];
-        OrderDB::create($cart,$uporabnik);
+        $total = Cart::total();
+        $uporabnik = $_SESSION["uporabnik"];
+        OrderDB::create($cart,$uporabnik,$total); //ustvarimo narocilo
+        Cart::purge();// izpraznimo košarico
 
-        $message = "Naročilo je bilo uspešno ustvarjeno. Z klikom na gumb Nazaj se lahko vrnete v trgovino in nadaljujete nakupovanje.";
-        echo ViewHelper::render("view/prikazi-sporocilo", $message);
+        echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Naročilo je bilo uspešno ustvarjeno. Z klikom na gumb Nazaj se lahko vrnete v trgovino in nadaljujete nakupovanje."]);
         // routaj nazaj na /store
     }
 
@@ -43,6 +44,11 @@ class OrderController {
 
     public static function orderList() {
 
+        $uporabnik = $_SESSION["uporabnik"];
+        $narocila = OrderDB::getAllUporabnik($uporabnik); //["uporabnik_id" => $uporabnik["uporabnik_id"]]
+        //var_dump($narocila);
+
+        echo ViewHelper::render("view/moja-narocila.php", ["narocila" => $narocila]);
     }
 
 }

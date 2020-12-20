@@ -37,10 +37,10 @@
     <a href="<?= BASE_URL . "log-out" ?>">
         <button> Odjava </button> <!--treba spremenit uporabnika nazaj na anonimnega userja -->
     </a> <br>
-<!--
+
     <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "administrator") :
         var_dump($_SESSION["uporabnik"]);
-    ?>-->
+    ?>
     <p> Admin </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "admin" ?>"><button> Vsi prodajalci </button></a> <!--admin-view.php-->
@@ -56,7 +56,7 @@
     <p> Anonimni uporabnik </p>
     <a href="<?= BASE_URL . "log-in" ?>"><button> Prijava </button></a> <!--log-in.php-->
     <a href="<?= BASE_URL . "sign-in" ?>"><button> Registracija </button></a> <!--sign-in.php-->
-<!--<?php endif; ?>-->
+    <?php endif; ?>
 </div>
 
 <div id="artikli-stranka">
@@ -140,7 +140,7 @@ foreach ($toys as $toy): ?><!--loop čez vse artikle -->
         <form action="<?= BASE_URL . "store/purge-cart" ?>" method="post">
             <p><button>Izprazni košarico</button></p>
         </form>
-        <form action="<?= BASE_URL . "store/potrdi-nakup" ?>" method="post">
+        <form action="<?= BASE_URL . "order/potrdi-nakup" ?>" method="post">
             <p><button> Potrdi nakup </button></p>
         </form>
     </div>

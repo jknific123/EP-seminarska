@@ -28,16 +28,23 @@ class OrderDB extends AbstractDB {
         return parent::query("SELECT * FROM narocilo");
     }
 
+    public static function getAllUporabnik(array $uporabnik) {
+        //pridobi usa narocila
+        return parent::query("SELECT * FROM narocilo"
+        . " WHERE uporabnik_id = :uporabnik_id", $uporabnik);
+    }
+
     public static function update(array $params) {
         // tuki se updejta samo status narocila
 
         return parent::modify("UPDATE narocilo SET narocilo_status = :status"
-            . " WHERE narocilo_id = :id", $params);
+            . " WHERE narocilo_id = :narocilo_id", $params);
     }
 
-    public static function create(array $cart, $uporabnik) {
+    public static function create($cart, $uporabnik, $total) {
         // za ustvarit narocilo
         $narocilo_status = "v obdelavi";
+        $narocilo_postavka = $total;
 
         //Vrne referenco na instanco  razreda PDO za dostop do baze. -> povezava na bazo also je sam ena povezava na enkrat
         $dbh = DBInit::getInstance();
@@ -45,13 +52,14 @@ class OrderDB extends AbstractDB {
         //NAROCILO
         //sql poizvedba za nardit narocilo
         // TODO: dodat je treba se narocilo_postavka -> $total
-        $narocilo = "INSERT INTO narocilo (uporabnik_id, narocilo_status) "
-            . " VALUES (:uporabnik_id, :narocilo_status)";
+        $narocilo = "INSERT INTO narocilo (uporabnik_id, narocilo_status, narocilo_postavka) "
+            . " VALUES (:uporabnik_id, :narocilo_status, :narocilo_postavka)";
 
         // pripravi statement za izvedbo
         $statementNarocilo = $dbh->prepare($narocilo);
-        $statementNarocilo->bindParam(":uporabnik_id", $uporabnik);
-        $statementNarocilo->bindParam(":$narocilo_status", $narocilo_status);
+        $statementNarocilo->bindParam(":uporabnik_id", $uporabnik["uporabnik_id"]);
+        $statementNarocilo->bindParam(":narocilo_status", $narocilo_status);
+        $statementNarocilo->bindParam(":narocilo_postavka", $narocilo_postavka);
         // izvedemo sql statementNarocilo
         $statementNarocilo->execute();
 

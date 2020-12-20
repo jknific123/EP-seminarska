@@ -7,7 +7,9 @@
 <h1>Dokončajte vaš nakup</h1>
 
 
-<?php if (!empty($cart)): ?>
+<?php if (!empty($cart)):
+    var_dump($_SESSION["uporabnik"]);
+    ?>
 
     <div id="order">
         <h3>Vaše naročilo:</h3>
@@ -22,7 +24,7 @@
         <p>Skupaj: <b><?= number_format($total, 2) ?> EUR</b></p>
 
 
-        <form action="<?= BASE_URL . "store/ustvari-narocilo" ?>" method="post">
+        <form action="<?= BASE_URL . "order/ustvari-narocilo" ?>" method="post">
             <p><button> Zaključi nakup </button></p>
         </form>
         <form action="<?= BASE_URL . "store" ?>">
@@ -30,4 +32,8 @@
         </form>
     </div>
 
-<?php endif; ?>
+<?php
+    else :
+        echo "Košarica je prazna";
+    endif;
+?>

@@ -60,11 +60,19 @@ $urls = [
     "store/purge-cart" => function () {
         StoreController::purgeCart();
     },
-    "store/potrdi-nakup" => function () {
+    "order/potrdi-nakup" => function () {
         OrderController::checkOrder();
     },
-    "store/ustvari-narocilo" => function () {
+    "order/ustvari-narocilo" => function () {
         OrderController::createOrder();
+    },
+    "order" => function () {
+        #narocilo-detail
+        OrderController::order();
+    },
+    "order/list" => function () {
+        #narocilo-list
+        OrderController::orderList();
     },
     "toy" => function () {
         #uredi-artikel
@@ -82,14 +90,7 @@ $urls = [
         #uredi-izbrisi-artikel
         ToysController::delete();
     },
-    "order" => function () {
-        #narocilo-detail
-        StoreController::order();
-    },
-    "order/list" => function () {
-        #narocilo-list
-        StoreController::orderList();
-    },
+
     "test" => function () {
         #testing
         echo ViewHelper::render("view/prikazi-sporocilo.php");
