@@ -59,8 +59,9 @@
 <!--<?php endif; ?>-->
 </div>
 
-<div id="main">
-<?php foreach ($toys as $toy): ?><!--loop čez vse artikle -->
+<div id="artikli-stranka">
+<?php if (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "stranka") :
+foreach ($toys as $toy): ?><!--loop čez vse artikle -->
     <div class="toy">
         <form action="<?= BASE_URL . "store/add-to-cart" ?>" method="post" />
         <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
@@ -71,7 +72,49 @@
         <a href="<?= BASE_URL . "toy?id=" . $toy["artikel_id"] ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php-->
     </div>
 
-<?php endforeach; ?>
+<?php endforeach;
+    endif;
+?>
+</div>
+
+<div id="artikli-prodajalec">
+    <?php if (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "prodajalec") :
+    foreach ($toys as $toy):
+    //var_dump($toys);
+    //var_dump($toy);
+    //if (isset($toy["artikel_ime"]) && $toy["artikel_aktiviran"] == 1) : //prikaze samo aktivirane artikle
+    ?><!--loop čez vse artikle -->
+    <div class="toy">
+        <form />
+        <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
+        <p> Ime izdelka: <?= $toy["artikel_ime"] ?> </p>
+        <p> Cena izdelka: <?= number_format($toy["artikel_cena"], 2) ?> EUR </p>
+        </form>
+        <a href="<?= BASE_URL . "toy?id=" . $toy["artikel_id"] ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php-->
+    </div>
+
+    <?php
+    //endif;
+    endforeach;
+    endif;
+    ?>
+</div>
+
+<div id="artikli-anonimni">
+    <?php if (!isset($_SESSION["uporabnik"])) : //anonimni
+    foreach ($toys as $toy): ?><!--loop čez vse artikle -->
+    <div class="toy">
+        <form />
+        <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
+        <p> Ime izdelka: <?= $toy["artikel_ime"] ?> </p>
+        <p> Cena izdelka: <?= number_format($toy["artikel_cena"], 2) ?> EUR </p>
+        </form>
+        <a href="<?= BASE_URL . "toy?id=" . $toy["artikel_id"] ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php-->
+    </div>
+
+    <?php endforeach;
+    endif;
+    ?>
 </div>
 
 
