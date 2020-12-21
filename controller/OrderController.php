@@ -38,10 +38,6 @@ class OrderController {
         // routaj nazaj na /store
     }
 
-    public static function order() {
-
-    }
-
     public static function orderList() {
 
         $uporabnik = $_SESSION["uporabnik"];

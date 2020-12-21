@@ -18,9 +18,7 @@ define("CSS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "static/css/");
 class PeopleController {
     
     
-    public static function admin() {
 
-    }
 
     public static function login() {
         $form = new LoginForm("prijava");
@@ -30,16 +28,16 @@ class PeopleController {
                 $email = $data["email"];
                 $hash = UserDB::getPass(["email" => $email]);
                 if ($hash) { // ali sploh najde uporabnika z tem emailo, da pol lahko najde njegovo geslo
-                    var_dump($hash["uporabnik_geslo"]);
+                    //var_dump($hash["uporabnik_geslo"]);
                     $valid = password_verify($data["geslo"] ,$hash["uporabnik_geslo"]);
                     $uporabnik = UserDB::getUporabnik(["email" => $email]); // tuki dejansko pridobimo tega uporabnika
-                    var_dump($valid);
-                    var_dump($uporabnik);
+                    //var_dump($valid);
+                    //var_dump($uporabnik);
                     if ($valid) { //je ok geslo gremo ga loginat
 
                         if ($uporabnik) { //loginamo uporabnika tuki preverimo tut aktiviranost
                             $_SESSION["uporabnik"] = $uporabnik; // tko ga prijavim vsi uporabnikovi atributi so dosegljivi na $_SESSION["uporabnik"]["atribut"]
-                            var_dump($_SESSION["uporabnik"]);
+                            //var_dump($_SESSION["uporabnik"]);
                             session_regenerate_id(); # varnost. tako prijavljeni uporabnik pridobi nov id seje!
                             ViewHelper::redirect(BASE_URL . "store");
                         }
@@ -121,7 +119,7 @@ class PeopleController {
         ];
         return $user;
     }
-    
+
     public static function changeMyData() {
         $userId = $_SESSION["uporabnik"]["uporabnik_id"];
              
@@ -136,9 +134,17 @@ class PeopleController {
         if ($form->isSubmitted() && $form->validate()) { //popravi vnesene podatke
             
             $data = $form->getValue();
-            var_dump($data);
+            $data['geslo'] = password_hash($data['geslo'], PASSWORD_BCRYPT);
             UserDB::update($data);
-            ViewHelper::redirect(BASE_URL . "my-data"); //ko so spremenjeni podatki me vrne na isto stran
+            $_SESSION["uporabnik"]["uporabnik_ime"] = $data['ime'];
+            $_SESSION["uporabnik"]["uporabnik_priimek"] = $data['priimek'];
+            $_SESSION["uporabnik"]["uporabnik_email"] = $data['email'];
+            $_SESSION["uporabnik"]["uporabnik_geslo"] = $data['geslo'];
+            $_SESSION["uporabnik"]["uporabnik_naslov"] = $data['naslov'];
+            $_SESSION["uporabnik"]["uporabnik_vrsta"] = $data['uporabnik_vrsta'];
+
+            var_dump($_SESSION);
+            //ViewHelper::redirect(BASE_URL . "my-data"); //ko so spremenjeni podatki me vrne na isto stran
   
         } else { 
            $dataSource = new HTML_QuickForm2_DataSource_Array(self::convertParamNames($userData));
@@ -152,9 +158,12 @@ class PeopleController {
 
     }
     
-    public static function users() {
+    public static function users() { //seznam-uporabnikov
+        //izpisi seznam vseh strank in mej možnost spreminjanja atributov in aktivacija/deaktivacije
+    }
+    public static function admin() { //admin-view
+        //izpisi seznam vseh prodajalcev in mej možnost spreminjanja atributov in aktivacija/deaktivacije
 
     }
-    
 
 }
