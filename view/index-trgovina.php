@@ -17,6 +17,10 @@
     <?php
     if (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "stranka") :
         var_dump($_SESSION["uporabnik"]); // to je samo za lazji debug
+        if(!isset($_SERVER["HTTPS"])){
+            $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+            header("Location: " . $url);
+        }
     ?>
     <p> Stranka: </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
@@ -28,6 +32,10 @@
 
     <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "prodajalec") :
         var_dump($_SESSION["uporabnik"]);
+        if(!isset($_SERVER["HTTPS"])){
+            $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+            header("Location: " . $url);
+        }
     ?>
     <p> Prodajalec </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
@@ -42,6 +50,10 @@
 
     <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "administrator") :
         var_dump($_SESSION["uporabnik"]);
+        if(!isset($_SERVER["HTTPS"])){
+            $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+            header("Location: " . $url);
+        }
     ?>
     <p> Admin </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
@@ -58,10 +70,11 @@
     <p> Anonimni uporabnik </p>
     <!-- nastavitev za preklop na nezavarovan kanal -->
     <?php
-    if(isset($_SERVER["HTTPS"])){
+    if(isset($_SERVER["HTTPS"]) && !isset($_SESSION["uporabnik"])){
         $url = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
         header("Location: " . $url);
     }
+
     ?>
     <a href="<?= BASE_URL . "log-in" ?>"><button> Prijava </button></a> <!--log-in.php-->
     <a href="<?= BASE_URL . "sign-in" ?>"><button> Registracija </button></a> <!--sign-in.php-->

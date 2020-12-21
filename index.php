@@ -31,6 +31,10 @@ $urls = [
         #log-in
         PeopleController::login();
     },
+    "log-in/authorize" => function() {
+        ViewHelper::render("view/authorize.php");
+        PeopleController::authorize();
+    },
     "log-out" => function () {
         #log-out
         PeopleController::logout();

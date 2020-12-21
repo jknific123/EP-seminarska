@@ -16,7 +16,39 @@ define("CSS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "static/css/");
 #People Controller : za funkcije ki so vezane na uporabnike (dodajanje, urejanje, brisanje prodajalcev ali strank)
 #register-signin, login, logout, izpiši uporabnike, spremeni geslo, spremeni svoje podatke...
 class PeopleController {
+    
+    public static function authorize(){
+        # vprasa za certifikat,
+        # pridobi podatke uporabniskega certifikata,
+        # primerja ime uporabnika v certifikatu z imenom uporabnika v bazi (glej pravila podjetja spodaj)
+        # če je OK, potrdi in uporabniku pusti, da se vrne na glavno stran,
+        # ce ni OK, uporabniku zavrne dostop in mu ponudi moznost vracila nazaj.
 
+        $client_cert = filter_input(INPUT_SERVER, "SSL_CLIENT_CERT");
+        
+        $cert_data = openssl_x509_parse($client_cert);
+        $commonname = $cert_data['subject']['CN'];
+        
+        $name = explode(' ',trim($commonname))[0];
+        
+        $userLoggingin = $_SESSION["uporabnik"]["uporabnik_ime"];
+        
+        # Naše podjetje od prodajalcev in administratorjev pričakuje,
+        # da če si spremenijo ime, moramo zaprositi za nov certifikat.
+        # To piše v naši konstituciji.
+        if (strcmp($userLoggingin, $name) == 0){
+            echo ViewHelper::render("view/prikazi-sporocilo.php", 
+                    ["message" => "Pozdravljen/a $commonname, tvoja identiteta je bila preverjena. Z gumbom za nazaj se vrneš na glavno stran."]);
+        }else{
+            # deluje podobno kot odjava.
+            unset($_SESSION["uporabnik"]);
+            session_destroy(); // sam unicimo sejo in je logoutan
+            echo ViewHelper::render("view/prikazi-sporocilo.php", 
+                    ["message" => "Tvoj certifikat se ne ujema z računom $userLoggingin. Če si $userLoggingin, si ga uvozi v brskalnik ali piši administratorju. Če nisi, pa smo te dobili."]);
+        }
+        #var_dump(($cert_data));
+    }
+    
     public static function login() {
         $form = new LoginForm("prijava");
         if ($form->validate()) {
@@ -33,10 +65,18 @@ class PeopleController {
                     if ($valid) { //je ok geslo gremo ga loginat
 
                         if ($uporabnik) { //loginamo uporabnika tuki preverimo tut aktiviranost
-                            $_SESSION["uporabnik"] = $uporabnik; // tko ga prijavim vsi uporabnikovi atributi so dosegljivi na $_SESSION["uporabnik"]["atribut"]
-                            //var_dump($_SESSION["uporabnik"]);
                             session_regenerate_id(); # varnost. tako prijavljeni uporabnik pridobi nov id seje!
-                            ViewHelper::redirect(BASE_URL . "store");
+                            $_SESSION["uporabnik"] = $uporabnik;
+                            
+                            if(($_SESSION["uporabnik"]["uporabnik_vrsta"] == "administrator") ||
+                               ($_SESSION["uporabnik"]["uporabnik_vrsta"] == "prodajalec")){
+                                # avtorizacija prodajalca in administratorja.
+                                echo ViewHelper::redirect( BASE_URL . "/log-in/authorize" );
+                             }else{
+                                # stranke nimajo certifikatov.
+                                $_SESSION["uporabnik"] = $uporabnik; // tko ga prijavim vsi uporabnikovi atributi so dosegljivi na $_SESSION["uporabnik"]["atribut"]
+                                ViewHelper::redirect(BASE_URL . "store");                                 
+                             }
                         }
                         else { //uporabnika ni najdlo
                             echo ViewHelper::render("view/log-in.php", ["form" => $form,  "errorMessage" => "Ta uporabnik ne obstaja."]);
