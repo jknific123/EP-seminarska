@@ -157,16 +157,23 @@ class PeopleController {
     
     
     public static function users() { //seznam-uporabnikov
-        //izpisi seznam vseh strank in mej možnost spreminjanja atributov in aktivacija/deaktivacije
+        //izpisi seznam vseh strank in mej možnost aktivacija/deaktivacije
         $allUsers = UserDB::getAllUsers("stranka");
-        
+        //var_dump($allUsers);
+        echo ViewHelper::render("view/seznam-strank.php", [
+            "allUsers" => $allUsers
+            ]);
         
         
         
     }
     public static function admin() { //admin-view
-        //izpisi seznam vseh prodajalcev in mej možnost spreminjanja atributov in aktivacija/deaktivacije
+        //izpisi seznam vseh prodajalcev in mej možnost aktivacija/deaktivacije
         $allUsers = UserDB::getAllUsers("prodajalec");
+        var_dump($allUsers);
+        echo ViewHelper::render("view/admin-view.php", [
+            "allUsers" => $allUsers
+            ]);
     }
 
 }
