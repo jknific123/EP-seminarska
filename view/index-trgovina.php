@@ -54,6 +54,13 @@
         endif;
     ?>
     <p> Anonimni uporabnik </p>
+    <!-- nastavitev za preklop na nezavarovan kanal -->
+    <?php
+    if(isset($_SERVER["HTTPS"])){
+        $url = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+        header("Location: " . $url);
+    }
+    ?>
     <a href="<?= BASE_URL . "log-in" ?>"><button> Prijava </button></a> <!--log-in.php-->
     <a href="<?= BASE_URL . "sign-in" ?>"><button> Registracija </button></a> <!--sign-in.php-->
     <?php endif; ?>
