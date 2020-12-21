@@ -175,5 +175,11 @@ class PeopleController {
             "allUsers" => $allUsers
             ]);
     }
+    
+    public static function edit(){
+        //TODO urejanje atributov določene stranke
+        
+        //echo ViewHelper::render("view/stranka-edit.php, .. )
+    }
 
 }

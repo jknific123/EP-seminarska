@@ -16,8 +16,7 @@
         <th> Email</th>
         <th> Naslov</th>
         <th> Vrsta uporabnika</th>
-        <th> Aktiviraj </th>
-        <th> Deaktiviraj</th>
+        <th> Upravljaj stranko </th>
     </tr>
     <?php foreach($allUsers as $user): ?> <!--izpiši vsako stranko posebej-->
     <tr>
@@ -26,8 +25,7 @@
         <td><?= $user["uporabnik_email"] ?></td>
         <td><?= $user["uporabnik_naslov"] ?></td>
         <td><?= $user["uporabnik_vrsta"] ?></td>
-        <td><button>Aktiviraj</button> </td><!-- TODO-->
-        <td><button>Deaktiviraj</button> </td><!-- TODO-->
+        <td><a href="<?= BASE_URL . "stranka/edit?id=" . $user["uporabnik_id"] ?>"><button>Upravljaj stranko</button> </a></td>
     </tr>
     <?php endforeach; ?>
 </table>

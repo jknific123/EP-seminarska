@@ -47,6 +47,10 @@ $urls = [
         #seznam-uporabnikov
         PeopleController::users();
     },
+    "stranka/edit" => function () {
+        #stranka-edit
+        PeopleController::edit();
+    },
     "store" => function () {
         #index-trgovina
         StoreController::index();
