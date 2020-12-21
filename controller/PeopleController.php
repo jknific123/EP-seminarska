@@ -107,22 +107,24 @@ class PeopleController {
         }
     }
     
-    public static function showUserForm($userData, $form) {
-             
-        //$dataSource = new HTML_QuickForm2_DataSource_Array($toy);
-        //$form->addDataSource($dataSource);
-              
-        echo ViewHelper::render("view/update-my-data.php", [
-                "form" => $form,
-                "userData" => $userData
-            ]);
+        // Use with data sources
+    private static function convertParamNames($user) {
+       $user = [
+            "id" =>$user["uporabnik_id"],
+            "ime" =>$user["uporabnik_ime"],
+            "priimek" =>$user["uporabnik_priimek"],
+            "email" =>$user["uporabnik_email"],
+            "geslo" =>$user["uporabnik_geslo"],
+            "naslov" =>$user["uporabnik_naslov"],
+            "uporabnik_vrsta" =>$user["uporabnik_vrsta"],
+           
+        ];
+        return $user;
     }
     
     public static function changeMyData() {
         $userId = $_SESSION["uporabnik"]["uporabnik_id"];
-        //$userId = isset($_GET["id"]) ? $_GET["id"] : $_POST["id"];
-        //var_dump($userId);
-                
+             
         $userData = UserDB::get($userId); //dobiš podatke iz baze
         
         if ($userData === null) {
@@ -134,14 +136,18 @@ class PeopleController {
         if ($form->isSubmitted() && $form->validate()) { //popravi vnesene podatke
             
             $data = $form->getValue();
+            var_dump($data);
             UserDB::update($data);
-            ViewHelper::redirect(BASE_URL . "store"); //ko so spremenjeni podatki me vrne na isto stran
+            ViewHelper::redirect(BASE_URL . "my-data"); //ko so spremenjeni podatki me vrne na isto stran
   
         } else { 
-           $dataSource = new HTML_QuickForm2_DataSource_Array($userData);
+           $dataSource = new HTML_QuickForm2_DataSource_Array(self::convertParamNames($userData));
+           
            $form->addDataSource($dataSource);
-                
-           self::showUserForm($userData, $form);
+           echo ViewHelper::render("view/update-my-data.php", [
+                "form" => $form,
+                "userData" => $userData
+            ]);
         }
 
     }

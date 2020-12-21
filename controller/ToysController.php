@@ -77,7 +77,7 @@ class ToysController {
         //var_dump($_GET);
         //var_dump($_POST);exit();
         $toyId = isset($_GET["id"]) ? $_GET["id"] : $_POST["id"];
-                
+         //var_dump($toyId);       
         $toyData = ToysDB::get($toyId);
         if ($toyData === null) {
             ViewHelper::redirect(BASE_URL . "store");
@@ -91,8 +91,7 @@ class ToysController {
             ToysDB::update($data);
             ViewHelper::redirect(BASE_URL . "toy?id=" . $data["id"]);
   
-        } else { 
-            //echo implode(" ",$_POST);
+        } else {
            $dataSource = new HTML_QuickForm2_DataSource_Array(self::convertParamNames($toyData));
            $form->addDataSource($dataSource);
                 
