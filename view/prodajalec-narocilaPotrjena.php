@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title>Vsa naročila</title>
 
-<h1>Vsa naročila</h1>
+<h1>Vsa potrjena naročila</h1>
 
 <?php //var_dump($narocila); ?>
 
@@ -26,16 +26,17 @@ var_dump($_SESSION["uporabnik"]);
                 <td><?= $narocilo["uporabnik_id"] ?> </td>
                 <td><?= $narocilo["narocilo_status"] ?></td>
                 <td><?= number_format($narocilo["narocilo_postavka"], 2) ?> EUR</td>
+                <td><a href="<?= BASE_URL . "order/orderEdit?id=" . $narocilo["narocilo_id"] ?>"> <button> Upravljaj z naročilom </button></a></td>
 
             </tr>
         <?php endforeach; ?>
     </table>
 
     <?php
-else :
-    echo "Ni oddanih naročil";
-endif;
-?>
+    else :
+        echo "Ni oddanih naročil";
+    endif;
+    ?>
 </div>
 
 <form action="<?= BASE_URL . "store" ?>">

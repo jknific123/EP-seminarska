@@ -74,12 +74,32 @@ $urls = [
     "order/ustvari-narocilo" => function () {
         OrderController::createOrder();
     },
+    "order/orderEdit" => function () {
+        OrderController::orderEdit();
+    },
+    "order/approve" => function () {
+        OrderController::orderApprove();
+    },
+    "order/discard" => function () {
+        OrderController::orderDiscard();
+    },
+    "order/storniraj" => function () {
+        OrderController::orderStorniraj();
+    },
     "order/listAll" => function () {
         #narocilo-detail
         OrderController::orderListAll();
     },
+    "order/listAllUnapproved" => function () {
+        #narocilo-detail
+        OrderController::orderListAllUnapproved();
+    },
+    "order/listAllApproved" => function () {
+        #narocilo-detail
+        OrderController::orderListAllApproved();
+    },
     "order/list" => function () {
-        #narocilo-list
+        #narocilo-list -> uporabnikova narocila
         OrderController::orderList();
     },
     "toy" => function () {

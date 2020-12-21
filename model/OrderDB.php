@@ -11,7 +11,7 @@ class OrderDB extends AbstractDB {
     public static function get(array $id) {
         // za dobit narocilo
 
-        $orders = parent::query("SELECT narocilo_id, narocilo_status, uporabnik_id"
+        $orders = parent::query("SELECT *"
             . " FROM narocilo"
             . " WHERE narocilo_id = :narocilo_id", $id);
 
@@ -32,6 +32,18 @@ class OrderDB extends AbstractDB {
         //pridobi usa narocila
         return parent::query("SELECT * FROM narocilo"
         . " WHERE uporabnik_id = :uporabnik_id", $uporabnik);
+    }
+
+    public static function getAllUnapproved(array $status) {
+        //pridobi usa narocila ki so v obdelavi
+        return parent::query("SELECT * FROM narocilo"
+            . " WHERE narocilo_status = :narocilo_status", $status);
+    }
+
+    public static function getAllApproved(array $status) {
+        //pridobi usa narocila ki so obdelana
+        return parent::query("SELECT * FROM narocilo"
+            . " WHERE narocilo_status = :narocilo_status", $status);
     }
 
     public static function update(array $params) {

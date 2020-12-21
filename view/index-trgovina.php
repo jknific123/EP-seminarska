@@ -32,6 +32,8 @@
     <p> Prodajalec </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "order/listAll" ?>"> <button> Vsa naročila </button></a> <!--narocilo-list.php-->
+    <a href="<?= BASE_URL . "order/listAllUnapproved" ?>"> <button> Vsa neobdelana naročila </button></a> <!--narocilo-list.php-->
+    <a href="<?= BASE_URL . "order/listAllApproved" ?>"> <button> Vsa potrjena naročila </button></a> <!--narocilo-list.php-->
     <a href="<?= BASE_URL . "users" ?>"> <button> Vse stranke </button></a> <!--seznam-strank.php-->
     <a href="<?= BASE_URL . "toy/add" ?>"> <button> Dodaj nov artikel </button></a> <!--dodaj-artikel.php-->
     <a href="<?= BASE_URL . "log-out" ?>">
