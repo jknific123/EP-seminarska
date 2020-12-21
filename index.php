@@ -49,7 +49,11 @@ $urls = [
     },
     "stranka/edit" => function () {
         #stranka-edit
-        PeopleController::edit();
+        PeopleController::strankaEdit();
+    },
+    "prodajalec/edit" => function () {
+        #stranka-edit
+        PeopleController::prodajalecEdit();
     },
     "store" => function () {
         #index-trgovina

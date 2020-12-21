@@ -176,10 +176,16 @@ class PeopleController {
             ]);
     }
     
-    public static function edit(){
+    public static function strankaEdit(){
         //TODO urejanje atributov določene stranke
         
         //echo ViewHelper::render("view/stranka-edit.php, .. )
+    }
+    
+    public static function prodajalecEdit(){
+        //TODO urejanje atributov določenega prodajalca
+        
+        //echo ViewHelper::render("view/prodajalec-edit.php, .. )
     }
 
 }
