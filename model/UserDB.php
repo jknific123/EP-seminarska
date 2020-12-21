@@ -67,14 +67,16 @@ class UserDB extends AbstractDB
         return parent::modify("DELETE FROM uporabnik WHERE uporabnik_email = :email", $id);
     }
 
-    //treba popravit nujno
-    public static function getAll()
+   
+    public static function getAllUsers($tipUporabnika) //vrne vse uporabnike določenega tipa (torej ali vse prodajalce ali pa vse stranke
     {
-        return parent::query("SELECT artikel_id, artikel_ime, artikel_cena, artikel_opis"
-            . " FROM artikel"
-            . " ORDER BY artikel_id ASC");
+        return parent::query("SELECT *"
+            . " FROM uporabnik"
+            . " WHERE uporabnik_vrsta = :tip_Uporabnika", ["tip_Uporabnika" => $tipUporabnika]);
     }
-
+    public static function getAll()
+    {    }
+    
     // treba popravit
     public static function insert(array $params)
     {
@@ -87,7 +89,6 @@ class UserDB extends AbstractDB
             . " FROM uporabnik"
             . " WHERE uporabnik_id = :id", ["id" => $id]);
 
-        //var_dump($uporabnik);
         if (count($uporabnik) == 1) { //smo ga najdli
             return $uporabnik[0];
         }else {

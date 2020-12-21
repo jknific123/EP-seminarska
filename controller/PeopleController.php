@@ -16,9 +16,6 @@ define("CSS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "static/css/");
 #People Controller : za funkcije ki so vezane na uporabnike (dodajanje, urejanje, brisanje prodajalcev ali strank)
 #register-signin, login, logout, izpiši uporabnike, spremeni geslo, spremeni svoje podatke...
 class PeopleController {
-    
-    
-
 
     public static function login() {
         $form = new LoginForm("prijava");
@@ -134,7 +131,9 @@ class PeopleController {
         if ($form->isSubmitted() && $form->validate()) { //popravi vnesene podatke
             
             $data = $form->getValue();
-            $data['geslo'] = password_hash($data['geslo'], PASSWORD_BCRYPT);
+            if ($_SESSION["uporabnik"]["uporabnik_geslo"] != $data['geslo']){ //če je bilo geslo spremenjeno pol ga hashaj
+                $data['geslo'] = password_hash($data['geslo'], PASSWORD_BCRYPT);
+            }
             UserDB::update($data);
             $_SESSION["uporabnik"]["uporabnik_ime"] = $data['ime'];
             $_SESSION["uporabnik"]["uporabnik_priimek"] = $data['priimek'];
@@ -142,9 +141,7 @@ class PeopleController {
             $_SESSION["uporabnik"]["uporabnik_geslo"] = $data['geslo'];
             $_SESSION["uporabnik"]["uporabnik_naslov"] = $data['naslov'];
             $_SESSION["uporabnik"]["uporabnik_vrsta"] = $data['uporabnik_vrsta'];
-
-            var_dump($_SESSION);
-            //ViewHelper::redirect(BASE_URL . "my-data"); //ko so spremenjeni podatki me vrne na isto stran
+            ViewHelper::redirect(BASE_URL . "store"); 
   
         } else { 
            $dataSource = new HTML_QuickForm2_DataSource_Array(self::convertParamNames($userData));
@@ -158,12 +155,18 @@ class PeopleController {
 
     }
     
+    
     public static function users() { //seznam-uporabnikov
         //izpisi seznam vseh strank in mej možnost spreminjanja atributov in aktivacija/deaktivacije
+        $allUsers = UserDB::getAllUsers("stranka");
+        
+        
+        
+        
     }
     public static function admin() { //admin-view
         //izpisi seznam vseh prodajalcev in mej možnost spreminjanja atributov in aktivacija/deaktivacije
-
+        $allUsers = UserDB::getAllUsers("prodajalec");
     }
 
 }

@@ -14,14 +14,18 @@
         <th> Ime stranke</th>
         <th> Priimek stranke</th>
         <th> Email</th>
+        <th> Naslov</th>
+        <th> Vrsta uporabnika</th>
         <th> Aktiviraj </th>
         <th> Deaktiviraj</th>
     </tr>
-    <?php foreach($stranka as $key=>$value): ?> <!--izpiši vsako stranko posebej-->
+    <?php foreach($allUsers as $user): ?> <!--izpiši vsako stranko posebej-->
     <tr>
-        <td><?php $name?></td>
-        <td><?php $priimek ?> </td>
-        <td><?php $email ?> </td>
+        <td><?= $user["uporabnik_ime"] ?></td>
+        <td><?= $user["uporabnik_priimek"] ?> </td>
+        <td><?= $user["uporabnik_email"] ?></td>
+        <td><?= $user["uporabnik_naslov"] ?></td>
+        <td><?= $user["uporabnik_vrsta"] ?></td>
         <td><button>Aktiviraj</button> </td><!-- TODO-->
         <td><button>Deaktiviraj</button> </td><!-- TODO-->
     </tr>
