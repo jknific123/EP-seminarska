@@ -16,7 +16,7 @@
         <th> Email</th>
         <th> Naslov</th>
         <th> Vrsta uporabnika</th>
-        <th> Upravljaj stranko </th>
+        <th> Aktiviranost stranke </th>
     </tr>
     <?php foreach($allUsers as $user): ?> <!--izpiši vsako stranko posebej-->
     <tr>
@@ -25,7 +25,12 @@
         <td><?= $user["uporabnik_email"] ?></td>
         <td><?= $user["uporabnik_naslov"] ?></td>
         <td><?= $user["uporabnik_vrsta"] ?></td>
-        <td><a href="<?= BASE_URL . "stranka/edit?id=" . $user["uporabnik_id"] ?>"><button>Upravljaj stranko</button> </a></td>
+        <?php if ($user["uporabnik_aktiviran"] == 1) : ?>
+        <td> Aktivirana </td>
+        <?php elseif ($user["uporabnik_aktiviran"] == 0) : ?>
+        <td> Deaktivirana </td>
+        <?php endif;?>
+        <td><a href="<?= BASE_URL . "user/edit?id=" . $user["uporabnik_id"] ?>"><button>Upravljaj stranko</button> </a></td>
     </tr>
     <?php endforeach; ?>
 </table>

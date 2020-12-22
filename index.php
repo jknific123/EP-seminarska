@@ -51,9 +51,18 @@ $urls = [
         #seznam-uporabnikov
         PeopleController::users();
     },
-    "stranka/edit" => function () {
+    "user/edit" => function () {
         #stranka-edit
+        var_dump($_SESSION["uporabnik"]);
         PeopleController::strankaEdit();
+    },
+    "user/activate" => function () {
+        #stranka-activate
+        PeopleController::aktiviraj();
+    },
+    "user/deactivate" => function () {
+        #stranka-deactivate
+        PeopleController::deaktiviraj();
     },
     "prodajalec/edit" => function () {
         #stranka-edit

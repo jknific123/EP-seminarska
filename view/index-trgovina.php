@@ -146,7 +146,9 @@ foreach ($toys as $toy): ?><!--loop čez vse artikle -->
 
     <div id="cart">
         <h3>Košarica</h3>
-        <?php foreach ($cart as $toy): ?>
+        <?php foreach ($cart as $toy):
+            if ($toy["artikel_aktiviran"] == 1) : //prikazi samo aktivirane artikle
+            ?>
 
             <form action="<?= BASE_URL . "store/update-cart" ?>" method="post">
                 <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
@@ -155,7 +157,9 @@ foreach ($toys as $toy): ?><!--loop čez vse artikle -->
                 <button>Posodobi</button>
             </form>
 
-        <?php endforeach; ?>
+        <?php
+            endif;
+        endforeach; ?>
 
         <p>Skupaj: <b><?= number_format($total, 2) ?> EUR</b></p>
 

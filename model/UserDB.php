@@ -62,6 +62,14 @@ class UserDB extends AbstractDB
         
     }
 
+    public static function updateAktiviranost(array $params)
+    {
+        //zaenkrat samo ime priimek in email ker se razlikujejo uporabniki
+        return parent::modify("UPDATE uporabnik SET  uporabnik_aktiviran = :uporabnik_aktiviran"
+            . " WHERE uporabnik_id = :uporabnik_id", $params);
+
+    }
+
     public static function delete(array $id)
     {
         return parent::modify("DELETE FROM uporabnik WHERE uporabnik_email = :email", $id);
@@ -72,10 +80,13 @@ class UserDB extends AbstractDB
     {
         return parent::query("SELECT *"
             . " FROM uporabnik"
-            . " WHERE uporabnik_vrsta = :tip_Uporabnika", ["tip_Uporabnika" => $tipUporabnika]);
+            . " WHERE uporabnik_vrsta = :uporabnik_vrsta", ["uporabnik_vrsta" => $tipUporabnika]);
     }
+
     public static function getAll()
-    {    }
+    {
+
+    }
     
     // treba popravit
     public static function insert(array $params)
@@ -84,10 +95,10 @@ class UserDB extends AbstractDB
             . " VALUES (:ime, :cena, :opis)", $params);
     }
 
-    public static function get($id)
+    public static function get(array $id)
     {    $uporabnik = parent::query("SELECT * "
             . " FROM uporabnik"
-            . " WHERE uporabnik_id = :id", ["id" => $id]);
+            . " WHERE uporabnik_id = :uporabnik_id", $id);
 
         if (count($uporabnik) == 1) { //smo ga najdli
             return $uporabnik[0];

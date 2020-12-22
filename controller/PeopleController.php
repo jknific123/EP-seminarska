@@ -203,10 +203,9 @@ class PeopleController {
         echo ViewHelper::render("view/seznam-strank.php", [
             "allUsers" => $allUsers
             ]);
-        
-        
-        
     }
+
+
     public static function admin() { //admin-view
         //izpisi seznam vseh prodajalcev in mej možnost aktivacija/deaktivacije
         $allUsers = UserDB::getAllUsers("prodajalec");
@@ -215,11 +214,74 @@ class PeopleController {
             "allUsers" => $allUsers
             ]);
     }
-    
+
     public static function strankaEdit(){
         //TODO urejanje atributov določene stranke
-        
-        //echo ViewHelper::render("view/stranka-edit.php, .. )
+
+        var_dump($_GET);
+        var_dump($_POST);
+        $uporabnikId = isset($_GET["id"]) ? $_GET["id"] : $_POST["id"];
+        var_dump($uporabnikId);
+        $uporabnik= UserDB::get(["uporabnik_id" => $uporabnikId]);
+        var_dump($uporabnik);
+        if ($uporabnik == null) {
+            //ViewHelper::redirect(BASE_URL . "users"); // ni najdlo narocila
+        }else {
+
+        }
+        //tuki je treba nardit se uno fromo za updejtat podatke
+
+        echo ViewHelper::render("view/stranka-edit.php", ["uporabnik" => $uporabnik]);
+
+    }
+
+    public static function aktiviraj(){
+
+        $uporabnikId = isset($_POST["uporabnik_id"]) ? intval($_POST["uporabnik_id"]) : null;
+        $status = 1;
+        $uporabnik = UserDB::get(["uporabnik_id" => $uporabnikId]);
+
+        if ($uporabnikId !== null) { //updejatamo status
+            UserDB::updateAktiviranost(["uporabnik_id" => $uporabnikId, "uporabnik_aktiviran" => $status]);
+        }
+        else { //ni najdlo uporabnika samo redirectamo nazaj -> to se nebi smelo dogajat
+            ViewHelper::redirect(BASE_URL . "users"); // ni najdlo narocila
+        }
+
+        /*   $narocilo = OrderDB::get(["narocilo_id" => $orderId]);
+        if ($narocilo === null) { //ni najdlo narocila samo redirectamo nazaj -> to se nebi smelo dogajat
+            ViewHelper::redirect(BASE_URL . "order/listAllUnapproved"); // ni najdlo narocila
+        }
+        */
+
+        //uspesno updejta status routamo nazaj na isto stran
+        //echo ViewHelper::render("view/upravljaj-narocilo.php", ["uporabnik" => $uporabnik]);
+        ViewHelper::redirect(BASE_URL . "users");
+    }
+
+    public static function deaktiviraj(){
+
+        $uporabnikId = isset($_POST["uporabnik_id"]) ? intval($_POST["uporabnik_id"]) : null;
+        $status = 0;
+        $uporabnik = UserDB::get(["uporabnik_id" => $uporabnikId]);
+
+        if ($uporabnikId !== null) { //updejatamo status
+            UserDB::updateAktiviranost(["uporabnik_id" => $uporabnikId, "uporabnik_aktiviran" => $status]);
+        }
+        else { //ni najdlo uporabnika samo redirectamo nazaj -> to se nebi smelo dogajat
+            ViewHelper::redirect(BASE_URL . "users"); // ni najdlo narocila
+        }
+
+        /*   $narocilo = OrderDB::get(["narocilo_id" => $orderId]);
+        if ($narocilo === null) { //ni najdlo narocila samo redirectamo nazaj -> to se nebi smelo dogajat
+            ViewHelper::redirect(BASE_URL . "order/listAllUnapproved"); // ni najdlo narocila
+        }
+        */
+
+        //uspesno updejta status routamo nazaj na isto stran
+        //echo ViewHelper::render("view/upravljaj-narocilo.php", ["uporabnik" => $uporabnik]);
+        ViewHelper::redirect(BASE_URL . "users");
+
     }
     
     public static function prodajalecEdit(){
