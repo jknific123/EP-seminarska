@@ -22,7 +22,7 @@
             header("Location: " . $url);
         }
     ?>
-    <p> Stranka: </p>
+    <p> Stranka </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "order/list" ?>"> <button> Vsa moja naročila </button></a> <!--narocilo-list.php-->
     <a href="<?= BASE_URL . "log-out" ?>">
@@ -55,7 +55,7 @@
             header("Location: " . $url);
         }
     ?>
-    <p> Admin </p>
+    <p> Administrator </p>
     <a href="<?= BASE_URL . "my-data" ?>"><button> Uredi profil </button></a> <!--update-my-data.php-->
     <a href="<?= BASE_URL . "admin" ?>"><button> Vsi prodajalci </button></a> <!--admin-view.php-->
     <a href="<?= BASE_URL . "log-out" ?>">

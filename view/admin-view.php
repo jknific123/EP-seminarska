@@ -16,8 +16,7 @@
         <th> Email</th>
         <th> Naslov</th>
         <th> Vrsta uporabnika</th>
-        <th> Aktiviraj </th>
-        <th> Deaktiviraj</th>
+        <th> Aktiviranost prodajalca </th>
     </tr>
     <?php foreach($allUsers as $user): ?> <!--izpiši vsako stranko posebej-->
     <tr>
@@ -26,12 +25,16 @@
         <td><?= $user["uporabnik_email"] ?></td>
         <td><?= $user["uporabnik_naslov"] ?></td>
         <td><?= $user["uporabnik_vrsta"] ?></td>
-        <td><a href="<?= BASE_URL . "prodajalec/edit?id=" . $user["uporabnik_id"] ?>"><button>Upravljaj prodajalca</button> </a></td>
+        <?php if ($user["uporabnik_aktiviran"] == 1) : ?>
+        <td> Aktiviran </td>
+        <?php elseif ($user["uporabnik_aktiviran"] == 0) : ?>
+        <td> Deaktiviran </td>
+        <?php endif;?>
+        <td><a href="<?= BASE_URL . "admin/edit?id=" . $user["uporabnik_id"] ?>"><button>Upravljaj prodajalca</button> </a></td>
     </tr>
     <?php endforeach; ?>
 </table>
 
 
-<a href="<?= BASE_URL . "sign-in" ?>">Dodaj novega prodajalca</a>
-
-<a href="<?= BASE_URL . "" ?>">Vrni se na prvo stran</a>
+<a href="<?= BASE_URL . "sign-in" ?>"><button> Dodaj novega prodajalca </button></a>
+<a href="<?= BASE_URL . "" ?>"><button> Vrni se na prvo stran </button></a>

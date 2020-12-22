@@ -23,10 +23,7 @@ exit(); */
 
 // ROUTER: preusmeri na določeno funkcijo znotraj controllerjev
 $urls = [
-    "admin" => function () {
-        #admin-view
-        PeopleController::admin();
-    },
+
     "log-in" => function () {
         #log-in
         PeopleController::login();
@@ -46,6 +43,23 @@ $urls = [
     "my-data" => function () {
         #update-my-data
         PeopleController::changeMyData();
+    },
+    "admin" => function () {
+        #admin-view
+        PeopleController::admin();
+    },
+    "admin/edit" => function () {
+        #stranka-edit
+        var_dump($_SESSION["uporabnik"]);
+        PeopleController::prodajalecEdit();
+    },
+    "admin/activate" => function () {
+        #stranka-activate
+        PeopleController::aktivirajProdajalca();
+    },
+    "admin/deactivate" => function () {
+        #stranka-deactivate
+        PeopleController::deaktivirajProdajalca();
     },
     "users" => function () {
         #seznam-uporabnikov

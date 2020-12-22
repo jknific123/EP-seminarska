@@ -9,7 +9,7 @@
 
 <br> <h3> Spremeni želene atribute </h3>
 
-   <?php //$form TUKI JE TRAB TO FORMO ?>
+   <?php //$form TUKI JE TREBA TO FORMO ?>
 
 <?= isset($errorMessage) ? $errorMessage : "" ?>
 
