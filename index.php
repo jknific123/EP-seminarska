@@ -6,6 +6,7 @@ require_once("controller/ToysController.php");
 require_once("controller/PeopleController.php");
 require_once("controller/StoreController.php");
 require_once("controller/OrderController.php");
+require_once("controller/StoreRESTController.php");
 //tle dodaš vse controllerje, ko jih ustvariš
 
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
@@ -153,14 +154,30 @@ $urls = [
     "" => function () { //če ni nič napisano usmeri na prvo stran od trgovine, torej razdelek toys
         ViewHelper::redirect(BASE_URL . "store");
     },
+     # REST API
+    "api/store/" => function ($id) {
+            StoreRESTController::get($id);
+    },
+  #  "api/store/1" => function($id){
+  #          StoreRESTController::get($id);
+  #  },
+    "api/store" => function () {
+            
+            StoreRESTController::index();
+                
+        
+    }
 ];
 
-   
-    
-    
+ 
+
 // Preveri če je vse okej in če ni izpiši napako
 try {
-    if (isset($urls[$path])) {
+    if(preg_match("/^api\/store\/(\d+)$/", $path)){
+        $pth = explode("/", $path);
+        $urls["api/store/"]($pth[2]);
+        
+    }else if(isset($urls[$path])) {
         $urls[$path]();
     } else {
         echo "No controller for '$path'";
@@ -169,4 +186,4 @@ try {
     ViewHelper::error404();
 } catch (Exception $e) {
     echo "An error occurred: <pre>$e</pre>";
-} 
+}

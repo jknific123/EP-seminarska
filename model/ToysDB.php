@@ -27,7 +27,17 @@ class ToysDB extends AbstractDB {
         $toys = parent::query("SELECT *"
                         . " FROM artikel"
                         . " WHERE artikel_id = :id", ["id" => $id]);
-        
+        if (count($toys) == 1) {
+            return $toys[0];
+        } else {
+            return null;
+        }
+    }
+    public static function getREST($id) {
+        $toys = parent::query("SELECT *"
+                        . " FROM artikel"
+                       # . " WHERE artikel_id = :id", ["id" => $id]);
+                        . " WHERE artikel_id = :id", $id);
         if (count($toys) == 1) {
             return $toys[0];
         } else {
@@ -40,6 +50,13 @@ class ToysDB extends AbstractDB {
         return parent::query("SELECT *"
                         . " FROM artikel"
                         . " ORDER BY artikel_id ASC");
+    }
+    
+    public static function getAllwithURI(array $prefix) {
+        return parent::query("SELECT artikel_id,artikel_ime,artikel_cena,artikel_opis,artikel_aktiviran, "
+                        . "          CONCAT(:prefix, artikel_id) as uri "
+                        . "FROM artikel "
+                        . "ORDER BY artikel_id ASC", $prefix);
     }
 
     // za Cart.php
