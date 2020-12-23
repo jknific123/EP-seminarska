@@ -8,19 +8,27 @@
 
 <?php var_dump($narocila); ?>
 
+
 <?php if (!empty($narocila)):
-    var_dump($_SESSION["uporabnik"]);
-    ?>
+var_dump($_SESSION["uporabnik"]);
+?>
+<table style="width:100%">
+    <tr>
+        <th> ID naročila</th>
+        <th> ID uporabnika</th>
+        <th> Status naročila</th>
+        <th> Postavka naročila</th>
+    </tr>
+    <?php foreach ($narocila as $narocilo): ?>
+        <tr>
+            <td><?= $narocilo["narocilo_id"]?></td>
+            <td><?= $narocilo["uporabnik_id"] ?> </td>
+            <td><?= $narocilo["narocilo_status"] ?></td>
+            <td><?= number_format($narocilo["narocilo_postavka"], 2) ?> EUR</td>
+        </tr>
+    <?php endforeach; ?>
+</table>
 
-    <div id="myOrders">
-        <h3>Vaša naročila:</h3>
-        <?php foreach ($narocila as $narocilo): ?>
-
-            <form>
-                <p> narocilo_id: <?= $narocilo["narocilo_id"]  ?>, uporabnik_id: <?= $narocilo["uporabnik_id"]  ?>, narocilo_status: <?= $narocilo["narocilo_status"]  ?>, narocilo_postavka: <?= number_format($narocilo["narocilo_postavka"], 2) ?> EUR </p>
-            </form>
-
-        <?php endforeach; ?>
 
 <?php
 else :

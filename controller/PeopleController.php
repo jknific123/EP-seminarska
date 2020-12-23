@@ -55,6 +55,13 @@ class PeopleController {
     }
     
     public static function login() {
+
+        // za https ze na login strani
+        if(!isset($_SERVER["HTTPS"])){
+            $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+            header("Location: " . $url);
+        }
+
         $form = new LoginForm("prijava");
         if ($form->validate()) {
             try {

@@ -36,7 +36,7 @@ class ToysDB extends AbstractDB {
     
     
     public static function getAll() {
-        return parent::query("SELECT artikel_id, artikel_ime, artikel_cena, artikel_opis"
+        return parent::query("SELECT *"
                         . " FROM artikel"
                         . " ORDER BY artikel_id ASC");
     }
