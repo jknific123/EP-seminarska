@@ -1,5 +1,10 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+require 'vendor/autoload.php';
+
 require_once("model/UserDB.php");
 require_once("ViewHelper.php");
 require_once("forms/SigninForm.php");
@@ -117,7 +122,7 @@ class PeopleController {
                 $data = $form->getValue();
                 //nardimo hash gesla
                 $data['geslo'] = password_hash($data['geslo'], PASSWORD_BCRYPT);
-
+                $email = $data["email"];
                 if ($data['geslo'] == false) { //hashanje ni uspelo
                     echo ViewHelper::render("view/prikazi-sporocilo.php", "Hashanje gelsa ni uspelo!");
                 }
@@ -125,7 +130,34 @@ class PeopleController {
 
                 if ($uspelo) {
                     // registracija uspela
-                    echo ViewHelper::redirect(BASE_URL . "log-in");
+                    //mail
+
+                    $mail = new PHPMailer();
+                    $mail->IsSMTP();
+                    $mail->Mailer = "smtp";
+                    $mail->SMTPDebug  = 1;
+                    $mail->SMTPAuth   = TRUE;
+                    $mail->SMTPSecure = "tls";
+                    $mail->Port       = 587;
+                    $mail->Host       = "smtp.gmail.com";
+                    $mail->Username   = "ep.trgovina123@gmail.com";
+                    $mail->Password   = "geslo12345";
+                    $mail->IsHTML(true);
+                    $mail->AddAddress($data["email"]);
+                    $mail->SetFrom("ep.trgovina123@gmail.com", "Admin");
+                    $mail->AddReplyTo("ep.trgovina123@gmail.com", "Admin");
+                    $mail->Subject = "Potrditveni email!";
+                    $content = "<b>Pozdravljeni! Dobrodošli v naši spletni trgovini. Želimo vam veliko užitkov in ugodnih nakupov. Lep pozdrav EP Team :)</b>";
+
+                    $mail->MsgHTML($content);
+                    if(!$mail->Send()) {
+                        echo "Error while sending Email.";
+                        var_dump($mail);
+                    } else {
+                        echo "Email sent successfully";
+                    }
+
+                    ViewHelper::redirect(BASE_URL . "store");
                 }
                 else {
                     echo ViewHelper::render("view/prikazi-sporocilo.php", "Registracija ni uspela! RIP :(");
