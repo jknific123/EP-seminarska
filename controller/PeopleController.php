@@ -133,41 +133,62 @@ class PeopleController {
                 if ($data['geslo'] == false) { //hashanje ni uspelo
                     echo ViewHelper::render("view/prikazi-sporocilo.php", "Hashanje gelsa ni uspelo!");
                 }
-                $uspelo = UserDB::dodaj($data);
 
-                if ($uspelo) {
-                    // registracija uspela
-                    //mail
+                //var_dump($_SERVER['REQUEST_METHOD']);
+                //var_dump($_POST['recaptcha_response']);
+                //najprej z reCAPTCHA v3 preverimo ali se registrira clovek ali robot
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recaptcha_response'])) {
 
-                    $mail = new PHPMailer();
-                    $mail->IsSMTP();
-                    $mail->Mailer = "smtp";
-                    $mail->SMTPDebug  = 1;
-                    $mail->SMTPAuth   = TRUE;
-                    $mail->SMTPSecure = "tls";
-                    $mail->Port       = 587;
-                    $mail->Host       = "smtp.gmail.com";
-                    $mail->Username   = "ep.trgovina123@gmail.com";
-                    $mail->Password   = "geslo12345";
-                    $mail->IsHTML(true);
-                    $mail->AddAddress($data["email"]);
-                    $mail->SetFrom("ep.trgovina123@gmail.com", "Admin");
-                    $mail->AddReplyTo("ep.trgovina123@gmail.com", "Admin");
-                    $mail->Subject = "Potrditveni email!";
-                    $content = "<b>Pozdravljeni! Dobrodošli v naši spletni trgovini. Želimo vam veliko užitkov in ugodnih nakupov. Lep pozdrav EP Team :)</b>";
+                    //zgradimo POST poizvedbo:
+                    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+                    $recaptcha_secret = '6LdXaRIaAAAAAI9eX6LmWvYg6lmqd2PL4NXTld3c';
+                    $recaptcha_response = $_POST['recaptcha_response'];
 
-                    $mail->MsgHTML($content);
-                    if(!$mail->Send()) {
-                        echo "Error while sending Email.";
-                        var_dump($mail);
+                    //Izvedemo in dekodiramo POST poizvedbo:
+                    $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+                    $recaptcha = json_decode($recaptcha);
+
+                    //Preverimo vrnjen score in se glede na to odlocimo ali je bot ali clovek:
+                    if ($recaptcha->score >= 0.6) {
+                        // Preverjeno -> uporabnika registriramo
+                        $uspelo = UserDB::dodaj($data);
+                        if ($uspelo) {
+                            // registracija uspela -> posljemo potrditveni mail
+                            $mail = new PHPMailer();
+                            $mail->IsSMTP();
+                            $mail->Mailer = "smtp";
+                            $mail->SMTPDebug  = 1;
+                            $mail->SMTPAuth   = TRUE;
+                            $mail->SMTPSecure = "tls";
+                            $mail->Port       = 587;
+                            $mail->Host       = "smtp.gmail.com";
+                            $mail->Username   = "ep.trgovina123@gmail.com";
+                            $mail->Password   = "geslo12345";
+                            $mail->IsHTML(true);
+                            $mail->AddAddress($data["email"]);
+                            $mail->SetFrom("ep.trgovina123@gmail.com", "Admin");
+                            $mail->AddReplyTo("ep.trgovina123@gmail.com", "Admin");
+                            $mail->Subject = "Potrditveni email!";
+                            $content = "<b>Pozdravljeni! Dobrodošli v naši spletni trgovini. Želimo vam veliko užitkov in ugodnih nakupov. Lep pozdrav EP Team :)</b>";
+
+                            $mail->MsgHTML($content);
+                            if(!$mail->Send()) {
+                                echo "Error while sending Email.";
+                                //var_dump($mail);
+                            } else {
+                                echo "Email sent successfully";
+                            }
+                            //echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Registracija bi mogla uspet!"]);
+                            ViewHelper::redirect(BASE_URL . "store");
+                        }
+                        else {
+                            echo ViewHelper::render("view/prikazi-sporocilo.php", "Registracija ni uspela!");
+                        }
                     } else {
-                        echo "Email sent successfully";
+                        // ni passal preverjanja -> bot
+                        echo ViewHelper::render("view/prikazi-sporocilo.php", "Registracija ni uspela zaradi CAPTCHA, to pomeni da si bot!");
                     }
 
-                    ViewHelper::redirect(BASE_URL . "store");
-                }
-                else {
-                    echo ViewHelper::render("view/prikazi-sporocilo.php", "Registracija ni uspela! RIP :(");
                 }
 
             } catch (PDOException $exc) {
