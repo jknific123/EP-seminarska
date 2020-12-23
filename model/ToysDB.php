@@ -22,8 +22,9 @@ class ToysDB extends AbstractDB {
         return parent::modify("DELETE FROM artikel WHERE artikel_id = :id", ["id" => $id]);
     }
 
+    //artikel_id, artikel_ime, artikel_cena, artikel_opis
     public static function get($id) {
-        $toys = parent::query("SELECT artikel_id, artikel_ime, artikel_cena, artikel_opis"
+        $toys = parent::query("SELECT *"
                         . " FROM artikel"
                         . " WHERE artikel_id = :id", ["id" => $id]);
         

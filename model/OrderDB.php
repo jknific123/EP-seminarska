@@ -18,9 +18,14 @@ class OrderDB extends AbstractDB {
         if (count($orders) == 1) {
             return $orders[0];
         } else {
-            throw new InvalidArgumentException("No such toy");
+            throw new InvalidArgumentException("No such order");
         }
 
+    }
+
+    public static function getAllArtikelNarocilo(array $id) {
+        //pridobi usa artikelNarocilo
+        return parent::query("SELECT * FROM artikelnarocilo WHERE narocilo_id = :narocilo_id", $id);
     }
 
     public static function getAll() {
@@ -72,7 +77,7 @@ class OrderDB extends AbstractDB {
         $statementNarocilo->bindParam(":uporabnik_id", $uporabnik["uporabnik_id"]);
         $statementNarocilo->bindParam(":narocilo_status", $narocilo_status);
         $statementNarocilo->bindParam(":narocilo_postavka", $narocilo_postavka);
-        // izvedemo sql statementNarocilo
+        // izvedemo sql statementNarocilo -> tuki se ustvari narocilo v bazi
         $statementNarocilo->execute();
 
         //za dobit id narocila
@@ -92,6 +97,7 @@ class OrderDB extends AbstractDB {
         $statementArtikelNarocilo->bindParam(":narocilo_id", $narocilo_id);
         $statementArtikelNarocilo->bindParam(":artikelnarocilo_kolicina", $artikelnarocilo_kolicina);
 
+        // tuki se ustvari artikelNarocilo za usak artikel v narocilu posebaj
         foreach ($cart as $toy) {
             $artikel_id = $toy["artikel_id"];
             $artikelnarocilo_kolicina = $toy["quantity"];

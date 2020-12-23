@@ -54,15 +54,22 @@ class OrderController {
         $orderId = isset($_GET["id"]) ? $_GET["id"] : $_POST["id"];
         var_dump($orderId);
         $narocilo = OrderDB::get(["narocilo_id" => $orderId]);
+        $artikelNarocilo = OrderDB::getAllArtikelNarocilo(["narocilo_id" => $orderId]);
+        $uporabnik = UserDB::get(["uporabnik_id" => $narocilo["uporabnik_id"] ]);
+        $artikli;
+        foreach ($artikelNarocilo as $element) {
+            $artikli[$element["artikel_id"]] = ToysDB::get($element["artikel_id"]);
+        }
+
         if ($narocilo === null) {
             ViewHelper::redirect(BASE_URL . "order/listAllUnapproved"); // ni najdlo narocila
         }
         //var_dump($toyData);exit();
         if ($narocilo["narocilo_status"] == "obdelano") { // izjema za obdelana/potrjena narocila ker samo njih lahko storniramo
-            echo ViewHelper::render("view/upravljaj-narocilo-obdelano.php", ["narocilo" => $narocilo]);
+            echo ViewHelper::render("view/upravljaj-narocilo-obdelano.php", ["narocilo" => $narocilo, "artikelNarocilo" => $artikelNarocilo, "artikli" => $artikli, "uporabnik" => $uporabnik]);
         }
         else {
-            echo ViewHelper::render("view/upravljaj-narocilo.php", ["narocilo" => $narocilo]);
+            echo ViewHelper::render("view/upravljaj-narocilo.php", ["narocilo" => $narocilo, "artikelNarocilo" => $artikelNarocilo, "artikli" => $artikli, "uporabnik" => $uporabnik]);
         }
     }
 
@@ -79,12 +86,18 @@ class OrderController {
         }
 
         $narocilo = OrderDB::get(["narocilo_id" => $orderId]);
+        $artikelNarocilo = OrderDB::getAllArtikelNarocilo(["narocilo_id" => $orderId]);
+        $uporabnik = UserDB::get(["uporabnik_id" => $narocilo["uporabnik_id"] ]);
+        $artikli;
+        foreach ($artikelNarocilo as $element) {
+            $artikli[$element["artikel_id"]] = ToysDB::get($element["artikel_id"]);
+        }
         if ($narocilo === null) { //ni najdlo narocila samo redirectamo nazaj -> to se nebi smelo dogajat
             ViewHelper::redirect(BASE_URL . "order/listAllUnapproved"); // ni najdlo narocila
         }
 
         //uspesno updejta status routamo nazaj na isto stran
-        echo ViewHelper::render("view/upravljaj-narocilo.php", ["narocilo" => $narocilo]);
+        echo ViewHelper::render("view/upravljaj-narocilo.php", ["narocilo" => $narocilo, "artikelNarocilo" => $artikelNarocilo, "artikli" => $artikli, "uporabnik" => $uporabnik]);
     }
 
     public static function orderDiscard() {
@@ -100,12 +113,18 @@ class OrderController {
         }
 
         $narocilo = OrderDB::get(["narocilo_id" => $orderId]);
+        $artikelNarocilo = OrderDB::getAllArtikelNarocilo(["narocilo_id" => $orderId]);
+        $uporabnik = UserDB::get(["uporabnik_id" => $narocilo["uporabnik_id"] ]);
+        $artikli;
+        foreach ($artikelNarocilo as $element) {
+            $artikli[$element["artikel_id"]] = ToysDB::get($element["artikel_id"]);
+        }
         if ($narocilo === null) { //ni najdlo narocila samo redirectamo nazaj -> to se nebi smelo dogajat
             ViewHelper::redirect(BASE_URL . "order/listAllUnapproved"); // ni najdlo narocila
         }
 
         //uspesno updejta status routamo nazaj na isto stran
-        echo ViewHelper::render("view/upravljaj-narocilo.php", ["narocilo" => $narocilo]);
+        echo ViewHelper::render("view/upravljaj-narocilo.php", ["narocilo" => $narocilo, "artikelNarocilo" => $artikelNarocilo, "artikli" => $artikli, "uporabnik" => $uporabnik]);
     }
 
     public static function orderStorniraj() {
@@ -121,17 +140,24 @@ class OrderController {
         }
 
         $narocilo = OrderDB::get(["narocilo_id" => $orderId]);
+        $artikelNarocilo = OrderDB::getAllArtikelNarocilo(["narocilo_id" => $orderId]);
+        $uporabnik = UserDB::get(["uporabnik_id" => $narocilo["uporabnik_id"] ]);
+        $artikli;
+        foreach ($artikelNarocilo as $element) {
+            $artikli[$element["artikel_id"]] = ToysDB::get($element["artikel_id"]);
+        }
         if ($narocilo === null) { //ni najdlo narocila samo redirectamo nazaj -> to se nebi smelo dogajat
             ViewHelper::redirect(BASE_URL . "order/listAllUnapproved"); // ni najdlo narocila
         }
 
         //uspesno updejta status routamo nazaj na isto stran
-        echo ViewHelper::render("view/upravljaj-narocilo.php", ["narocilo" => $narocilo]);
+        echo ViewHelper::render("view/upravljaj-narocilo.php", ["narocilo" => $narocilo, "artikelNarocilo" => $artikelNarocilo, "artikli" => $artikli, "uporabnik" => $uporabnik]);
     }
 
     public static function orderListAll() {
 
         $narocila = OrderDB::getAll(); //vsa narocila iz baze
+        //$uporabnik = UserDB::get();
         //var_dump($narocila);
 
         echo ViewHelper::render("view/prodajalec-narocila.php", ["narocila" => $narocila]);

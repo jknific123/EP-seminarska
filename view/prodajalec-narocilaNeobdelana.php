@@ -34,7 +34,7 @@ var_dump($_SESSION["uporabnik"]);
 
     <?php
     else :
-        echo "Ni oddanih naročil";
+        echo "Ni oddanih neobdelanih naročil";
     endif;
     ?>
 </div>
