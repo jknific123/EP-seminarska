@@ -1,5 +1,21 @@
 # EP-seminarska
-ooj
+
+Uporabniški računi in gesla:
+
+admin: nikak@gmail.com, geslo12345
+prodajalec: knifo@gmail.com, geslo12345
+stranka: kirba@gmail.com, geslo12345
+
+Za uprabo spletne trgovine je najprej treba naložiti bazo:
+
+(mysql -u root -p < NetBeansProjects/Seminarska/EP-seminarska/conf/sql/toystoredbCreate.sql)
+
+Nato naložimo še testne podatke z ukazom:
+
+ (mysql -u root -p < NetBeansProjects/Seminarska/EP-seminarska/conf/sql/toystoredbResetData.sql)
+
+Po tem je spletna trgovina pripravljena na uporabo.
+
 
 Certifikati:
 1. Skopiraj datoteke, ki so v apache2/ssl in apache2/sites-available v etc/apache2/ssl in etc/apache2/sites-available. Najbrz bos moral/a to naredit z terminalom in sudo cp.
