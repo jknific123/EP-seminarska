@@ -16,7 +16,7 @@
 <div>
     <?php
     if (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "stranka") :
-        var_dump($_SESSION["uporabnik"]); // to je samo za lazji debug
+        //var_dump($_SESSION["uporabnik"]); // to je samo za lazji debug
         if(!isset($_SERVER["HTTPS"])){
             $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
             header("Location: " . $url);
@@ -31,7 +31,7 @@
     <br>
 
     <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "prodajalec") :
-        var_dump($_SESSION["uporabnik"]);
+        //var_dump($_SESSION["uporabnik"]);
         if(!isset($_SERVER["HTTPS"])){
             $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
             header("Location: " . $url);
@@ -49,7 +49,7 @@
     </a> <br>
 
     <?php elseif (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "administrator") :
-        var_dump($_SESSION["uporabnik"]);
+        //var_dump($_SESSION["uporabnik"]);
         if(!isset($_SERVER["HTTPS"])){
             $url = "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
             header("Location: " . $url);

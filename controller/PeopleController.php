@@ -279,7 +279,7 @@ class PeopleController {
 
         if (isset($_SESSION["uporabnik"])) { //lahko samo ce je logiran not
             $allUsers = UserDB::getAllUsers("prodajalec");
-            var_dump($allUsers);
+            //var_dump($allUsers);
             echo ViewHelper::render("view/admin-view.php", [
                 "allUsers" => $allUsers
             ]);
@@ -292,39 +292,103 @@ class PeopleController {
     public static function strankaEdit(){
         //TODO urejanje atributov določene stranke + lahko samo ce je logiran
 
-        var_dump($_GET);
-        var_dump($_POST);
-        $uporabnikId = isset($_GET["id"]) ? $_GET["id"] : $_POST["id"];
-        var_dump($uporabnikId);
+        //var_dump($_GET);
+        //var_dump($_POST);
+        $uporabnikId = htmlspecialchars(isset($_GET["id"]) ? $_GET["id"] : $_POST["id"]);
+        //var_dump($uporabnikId);
         $uporabnik= UserDB::get(["uporabnik_id" => $uporabnikId]);
-        var_dump($uporabnik);
+        //var_dump($uporabnik);
         if ($uporabnik == null) {
             ViewHelper::redirect(BASE_URL . "users"); // ni najdlo narocila
         }else {
 
+            //$uporabnikId = $_SESSION["uporabnik"]["uporabnik_id"];
+
+            $userData = UserDB::get(["uporabnik_id" => $uporabnikId]); //dobiš podatke iz baze
+
+            if ($userData === null) {
+                ViewHelper::redirect(BASE_URL . "store");
+            }
+
+            $form = new RegisterEditForm("edit_form");
+
+            if ($form->isSubmitted() && $form->validate()) { //popravi vnesene podatke
+
+                $data = $form->getValue();
+                $trenutnoGeslo = UserDB::getPass(["email" => $data["email"]]);
+                $aliJeGesloSpremenjeno = password_verify($data["geslo"] ,$trenutnoGeslo); //če je geslo isto pol je v tej spremenljivki true če različno pol je false
+                if (!$aliJeGesloSpremenjeno){ //če je bilo geslo spremenjeno pol ga hashaj  -> pogleda a je ta spremenljivka true ali false
+                    $data['geslo'] = password_hash($data['geslo'], PASSWORD_BCRYPT);
+                }
+                UserDB::update($data);
+
+                ViewHelper::redirect(BASE_URL . "store");
+
+            } else {
+                $dataSource = new HTML_QuickForm2_DataSource_Array(self::convertParamNames($userData));
+
+                $form->addDataSource($dataSource);
+                echo ViewHelper::render("view/stranka-edit.php", [
+                    "form" => $form,
+                    "userData" => $userData,
+                    "uporabnik" => $uporabnik
+                ]);
+            }
+
         }
         //tuki je treba nardit se uno fromo za updejtat podatke
 
-        echo ViewHelper::render("view/stranka-edit.php", ["uporabnik" => $uporabnik]);
+        //echo ViewHelper::render("view/stranka-edit.php", ["uporabnik" => $uporabnik]);
     }
 
     public static function prodajalecEdit(){
         //TODO urejanje atributov določenega prodajalca + lahko samo ce je logiran
 
-        var_dump($_GET);
-        var_dump($_POST);
-        $prodajalecId = isset($_GET["id"]) ? $_GET["id"] : $_POST["id"];
-        var_dump($prodajalecId);
+        //var_dump($_GET);
+        //var_dump($_POST);
+        $prodajalecId = htmlspecialchars(isset($_GET["id"]) ? $_GET["id"] : $_POST["id"]);
+        //var_dump($prodajalecId);
         $uporabnik= UserDB::get(["uporabnik_id" => $prodajalecId]);
-        var_dump($uporabnik);
+        //var_dump($uporabnik);
         if ($uporabnik == null) {
             ViewHelper::redirect(BASE_URL . "admin"); // ni najdlo narocila
         }else {
+            //$uporabnikId = $_SESSION["uporabnik"]["uporabnik_id"];
 
+            $userData = UserDB::get(["uporabnik_id" => $prodajalecId]); //dobiš podatke iz baze
+
+            if ($userData === null) {
+                ViewHelper::redirect(BASE_URL . "store");
+            }
+
+            $form = new RegisterEditForm("edit_form");
+
+            if ($form->isSubmitted() && $form->validate()) { //popravi vnesene podatke
+
+                $data = $form->getValue();
+                $trenutnoGeslo = UserDB::getPass(["email" => $data["email"]]);
+                $aliJeGesloSpremenjeno = password_verify($data["geslo"] ,$trenutnoGeslo); //če je geslo isto pol je v tej spremenljivki true če različno pol je false
+                if (!$aliJeGesloSpremenjeno){ //če je bilo geslo spremenjeno pol ga hashaj  -> pogleda a je ta spremenljivka true ali false
+                    $data['geslo'] = password_hash($data['geslo'], PASSWORD_BCRYPT);
+                }
+                UserDB::update($data);
+
+                ViewHelper::redirect(BASE_URL . "store");
+
+            } else {
+                $dataSource = new HTML_QuickForm2_DataSource_Array(self::convertParamNames($userData));
+
+                $form->addDataSource($dataSource);
+                echo ViewHelper::render("view/prodajalec-edit.php", [
+                    "form" => $form,
+                    "userData" => $userData,
+                    "uporabnik" => $uporabnik
+                ]);
+            }
         }
         //tuki je treba nardit se uno fromo za updejtat podatke
 
-        echo ViewHelper::render("view/prodajalec-edit.php", ["uporabnik" => $uporabnik]);
+        //echo ViewHelper::render("view/prodajalec-edit.php", ["uporabnik" => $uporabnik]);
     }
 
     public static function aktiviraj(){

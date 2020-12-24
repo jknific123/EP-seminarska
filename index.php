@@ -68,7 +68,7 @@ $urls = [
     },
     "user/edit" => function () {
         #stranka-edit
-        var_dump($_SESSION["uporabnik"]);
+        //var_dump($_SESSION["uporabnik"]);
         PeopleController::strankaEdit();
     },
     "user/activate" => function () {

@@ -9,7 +9,7 @@
 
 <br> <h3> Spremeni želene atribute </h3>
 
-   <?php //$form TUKI JE TREBA TO FORMO ?>
+   <?= $form  ?>
 
 <?= isset($errorMessage) ? $errorMessage : "" ?>
 
@@ -30,4 +30,4 @@
 
 <?php endif; ?>
 
-<br><a href="<?= BASE_URL . "users" ?>"> Nazaj </a>
+<br><a href="<?= BASE_URL . "users" ?>"> <button>Nazaj</button>  </a>

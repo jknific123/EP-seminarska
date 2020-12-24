@@ -6,11 +6,11 @@
 
 <h1>Moja naročila</h1>
 
-<?php var_dump($narocila); ?>
+<?php //var_dump($narocila); ?>
 
 
 <?php if (!empty($narocila)):
-var_dump($_SESSION["uporabnik"]);
+//var_dump($_SESSION["uporabnik"]);
 ?>
 <table style="width:100%" border="1" >
     <tr>
