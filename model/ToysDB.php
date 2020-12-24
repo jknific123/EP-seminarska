@@ -18,8 +18,10 @@ class ToysDB extends AbstractDB {
                         . " WHERE artikel_id = :id", $params);
     }
 
-    public static function delete($id) {
-        return parent::modify("DELETE FROM artikel WHERE artikel_id = :id", ["id" => $id]);
+    public static function delete($id) { //samo deaktiviramo ne pa izbrisemo
+
+        return parent::modify("UPDATE artikel SET artikel_aktiviran = 0 "
+            . " WHERE artikel_id = :id", ["id" => $id]);
     }
 
     //artikel_id, artikel_ime, artikel_cena, artikel_opis

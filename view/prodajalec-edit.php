@@ -30,4 +30,4 @@
 
 <?php endif; ?>
 
-<br><a href="<?= BASE_URL . "admin" ?>"> Nazaj </a>
+<br><a href="<?= BASE_URL . "admin" ?>"> <button> Nazaj </button> </a>

@@ -12,7 +12,7 @@
 <?php if (!empty($narocila)):
 var_dump($_SESSION["uporabnik"]);
 ?>
-<table style="width:100%">
+<table style="width:100%" border="1" >
     <tr>
         <th> ID naročila</th>
         <th> ID uporabnika</th>
@@ -21,10 +21,10 @@ var_dump($_SESSION["uporabnik"]);
     </tr>
     <?php foreach ($narocila as $narocilo): ?>
         <tr>
-            <td><?= $narocilo["narocilo_id"]?></td>
-            <td><?= $narocilo["uporabnik_id"] ?> </td>
-            <td><?= $narocilo["narocilo_status"] ?></td>
-            <td><?= number_format($narocilo["narocilo_postavka"], 2) ?> EUR</td>
+            <td style="text-align: center; vertical-align: middle;"><?= $narocilo["narocilo_id"]?></td>
+            <td style="text-align: center; vertical-align: middle;"><?= $narocilo["uporabnik_id"] ?> </td>
+            <td style="text-align: center; vertical-align: middle;"><?= $narocilo["narocilo_status"] ?></td>
+            <td style="text-align: center; vertical-align: middle;"><?= number_format($narocilo["narocilo_postavka"], 2) ?> EUR</td>
         </tr>
     <?php endforeach; ?>
 </table>

@@ -83,7 +83,7 @@ class PeopleController {
                             if(($_SESSION["uporabnik"]["uporabnik_vrsta"] == "administrator") ||
                                ($_SESSION["uporabnik"]["uporabnik_vrsta"] == "prodajalec")){
                                 # avtorizacija prodajalca in administratorja.
-                                echo ViewHelper::redirect( BASE_URL . "/log-in/authorize" );
+                                ViewHelper::redirect( BASE_URL . "/log-in/authorize" );
                              }else{
                                 # stranke nimajo certifikatov.
                                 $_SESSION["uporabnik"] = $uporabnik; // tko ga prijavim vsi uporabnikovi atributi so dosegljivi na $_SESSION["uporabnik"]["atribut"]
@@ -91,7 +91,7 @@ class PeopleController {
                              }
                         }
                         else { //uporabnika ni najdlo
-                            echo ViewHelper::render("view/log-in.php", ["form" => $form,  "errorMessage" => "Ta uporabnik ne obstaja."]);
+                            echo ViewHelper::render("view/log-in.php", ["form" => $form,  "errorMessage" => "Ta uporabnik ne obstaja ali pa ni aktiviran."]);
                             //echo ViewHelper::render("view/prikazi-sporocilo.php", ["message" => "Ta uporabnik ne obstaja."]);
                         }
                     }
@@ -101,7 +101,7 @@ class PeopleController {
                     }
                 }
                 else { //email je narobe oz uporabnik z tem emailom ne obstaja
-                    echo ViewHelper::render("view/log-in.php", ["form" => $form, "errorMessage" => "Uporabniško ime ali geslo je napačno, preveri vpisano geslo!"]);
+                    echo ViewHelper::render("view/log-in.php", ["form" => $form, "errorMessage" => "Uporabniško ime ali geslo je napačno, preveri vpisano geslo in email!"]);
                 }
                 
                 //echo ViewHelper::redirect(BASE_URL . "store");
@@ -260,25 +260,37 @@ class PeopleController {
     
     public static function users() { //seznam-uporabnikov
         //izpisi seznam vseh strank in mej možnost aktivacija/deaktivacije
-        $allUsers = UserDB::getAllUsers("stranka");
-        //var_dump($allUsers);
-        echo ViewHelper::render("view/seznam-strank.php", [
-            "allUsers" => $allUsers
+
+        if (isset($_SESSION["uporabnik"])) { //lahko samo ce je logiran not
+            $allUsers = UserDB::getAllUsers("stranka");
+            //var_dump($allUsers);
+            echo ViewHelper::render("view/seznam-strank.php", [
+                "allUsers" => $allUsers
             ]);
+        }
+        else {
+            ViewHelper::redirect(BASE_URL . "log-in");
+        }
     }
 
 
     public static function admin() { //admin-view
         //izpisi seznam vseh prodajalcev in mej možnost aktivacija/deaktivacije
-        $allUsers = UserDB::getAllUsers("prodajalec");
-        var_dump($allUsers);
-        echo ViewHelper::render("view/admin-view.php", [
-            "allUsers" => $allUsers
+
+        if (isset($_SESSION["uporabnik"])) { //lahko samo ce je logiran not
+            $allUsers = UserDB::getAllUsers("prodajalec");
+            var_dump($allUsers);
+            echo ViewHelper::render("view/admin-view.php", [
+                "allUsers" => $allUsers
             ]);
+        }
+        else {
+            ViewHelper::redirect(BASE_URL . "log-in");
+        }
     }
 
     public static function strankaEdit(){
-        //TODO urejanje atributov določene stranke
+        //TODO urejanje atributov določene stranke + lahko samo ce je logiran
 
         var_dump($_GET);
         var_dump($_POST);
@@ -297,7 +309,7 @@ class PeopleController {
     }
 
     public static function prodajalecEdit(){
-        //TODO urejanje atributov določenega prodajalca
+        //TODO urejanje atributov določenega prodajalca + lahko samo ce je logiran
 
         var_dump($_GET);
         var_dump($_POST);

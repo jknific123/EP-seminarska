@@ -9,7 +9,7 @@
 
 
 
-<table style="width:100%">
+<table style="width:100%" border="1">
     <tr>
         <th> Ime stranke</th>
         <th> Priimek stranke</th>
@@ -17,24 +17,25 @@
         <th> Naslov</th>
         <th> Vrsta uporabnika</th>
         <th> Aktiviranost stranke </th>
+        <th> Podrobnosti stranke </th>
     </tr>
     <?php foreach($allUsers as $user): ?> <!--izpiši vsako stranko posebej-->
     <tr>
-        <td><?= $user["uporabnik_ime"] ?></td>
-        <td><?= $user["uporabnik_priimek"] ?> </td>
-        <td><?= $user["uporabnik_email"] ?></td>
-        <td><?= $user["uporabnik_naslov"] ?></td>
-        <td><?= $user["uporabnik_vrsta"] ?></td>
+        <td style="text-align: center; vertical-align: middle;"><?= $user["uporabnik_ime"] ?></td>
+        <td style="text-align: center; vertical-align: middle;"><?= $user["uporabnik_priimek"] ?> </td>
+        <td style="text-align: center; vertical-align: middle;"><?= $user["uporabnik_email"] ?></td>
+        <td style="text-align: center; vertical-align: middle;"><?= $user["uporabnik_naslov"] ?></td>
+        <td style="text-align: center; vertical-align: middle;"><?= $user["uporabnik_vrsta"] ?></td>
         <?php if ($user["uporabnik_aktiviran"] == 1) : ?>
-        <td> Aktivirana </td>
+        <td style="text-align: center; vertical-align: middle;"> Aktivirana </td>
         <?php elseif ($user["uporabnik_aktiviran"] == 0) : ?>
-        <td> Deaktivirana </td>
+        <td style="text-align: center; vertical-align: middle;"> Deaktivirana </td>
         <?php endif;?>
-        <td><a href="<?= BASE_URL . "user/edit?id=" . $user["uporabnik_id"] ?>"><button>Upravljaj stranko</button> </a></td>
+        <td style="text-align: center; vertical-align: middle;"><a href="<?= BASE_URL . "user/edit?id=" . $user["uporabnik_id"] ?>"><button>Upravljaj stranko</button> </a></td>
     </tr>
     <?php endforeach; ?>
 </table>
 
 
 <a href="<?= BASE_URL . "sign-in" ?>"><button> Dodaj novo stranko </button></a> <!--sign-in.php-->
-<a href="<?= BASE_URL . "" ?>"><button> Vrni se na prvo stran </button></a>
+<a href="<?= BASE_URL . "" ?>"><button> Nazaj </button></a>

@@ -83,7 +83,9 @@
 
 <div id="artikli-stranka">
 <?php if (isset($_SESSION["uporabnik"]) && $_SESSION["uporabnik"]["uporabnik_vrsta"] == "stranka") :
-foreach ($toys as $toy): ?><!--loop čez vse artikle -->
+foreach ($toys as $toy):
+if (isset($toy["artikel_ime"]) && $toy["artikel_aktiviran"] == 1) : //prikaze samo aktivirane artikle
+?><!--loop čez vse artikle -->
     <div class="toy">
         <form action="<?= BASE_URL . "store/add-to-cart" ?>" method="post" />
         <input type="hidden" name="artikel_id" value="<?= $toy["artikel_id"] ?>" />
@@ -94,7 +96,9 @@ foreach ($toys as $toy): ?><!--loop čez vse artikle -->
         <a href="<?= BASE_URL . "toy?id=" . $toy["artikel_id"] ?>"><button> Podrobnosti </button></a> <!--uredi-artikel.php-->
     </div>
 
-<?php endforeach;
+<?php
+    endif;
+endforeach;
     endif;
 ?>
 </div>
@@ -104,7 +108,7 @@ foreach ($toys as $toy): ?><!--loop čez vse artikle -->
     foreach ($toys as $toy):
     //var_dump($toys);
     //var_dump($toy);
-    //if (isset($toy["artikel_ime"]) && $toy["artikel_aktiviran"] == 1) : //prikaze samo aktivirane artikle
+    if (isset($toy["artikel_ime"]) && $toy["artikel_aktiviran"] == 1) : //prikaze samo aktivirane artikle
     ?><!--loop čez vse artikle -->
     <div class="toy">
         <form />
@@ -116,7 +120,7 @@ foreach ($toys as $toy): ?><!--loop čez vse artikle -->
     </div>
 
     <?php
-    //endif;
+    endif;
     endforeach;
     endif;
     ?>
@@ -165,6 +169,7 @@ foreach ($toys as $toy): ?><!--loop čez vse artikle -->
         endforeach; ?>
 
         <p>Skupaj: <b><?= number_format($total, 2) ?> EUR</b></p>
+        <p> Če želite nek artikel odstraniti, nastavite količino na 0 in pritisnite posodobi. </p>
 
         <form action="<?= BASE_URL . "store/purge-cart" ?>" method="post">
             <p><button>Izprazni košarico</button></p>

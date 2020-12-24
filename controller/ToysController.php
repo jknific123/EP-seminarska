@@ -38,15 +38,21 @@ class ToysController {
 
     public static function add() { //ta dela
         $form = new ToysInsertForm("new_toy");
-        
-        if ($form->validate()) {
-            $id = ToysDB::insert($form->getValue());
-            ViewHelper::redirect(BASE_URL . "store");
-        } else { // GET request or invalid data - show form
-            self::showAddForm([
-                "form" => $form
-            ]);
+
+        if (isset($_SESSION["uporabnik"])) { //lahko samo ce je logiran not
+            if ($form->validate()) {
+                $id = ToysDB::insert($form->getValue());
+                ViewHelper::redirect(BASE_URL . "store");
+            } else { // GET request or invalid data - show form
+                self::showAddForm([
+                    "form" => $form
+                ]);
+            }
         }
+        else {
+            ViewHelper::redirect(BASE_URL . "log-in");
+        }
+
     }
  
     // Use with data sources
@@ -76,37 +82,50 @@ class ToysController {
     public static function edit() {
         //var_dump($_GET);
         //var_dump($_POST);exit();
-        $toyId = isset($_GET["id"]) ? $_GET["id"] : $_POST["id"];
-         //var_dump($toyId);       
-        $toyData = ToysDB::get($toyId);
-        if ($toyData === null) {
-            ViewHelper::redirect(BASE_URL . "store");
+        $toyId = htmlspecialchars(isset($_GET["id"]) ? $_GET["id"] : $_POST["id"]);
+         //var_dump($toyId);
+
+        if (isset($_SESSION["uporabnik"])) { //lahko samo ce je logiran not
+
+            $toyData = ToysDB::get($toyId);
+            if ($toyData === null) {
+                ViewHelper::redirect(BASE_URL . "store");
+            }
+            //var_dump($toyData);exit();
+            $form = new ToysEditForm("edit_form");
+
+            if ($form->isSubmitted() && $form->validate()) { //popravi vnesene podatke
+
+                $data = $form->getValue();
+                ToysDB::update($data);
+                ViewHelper::redirect(BASE_URL . "toy?id=" . $data["id"]);
+
+            } else {
+                $dataSource = new HTML_QuickForm2_DataSource_Array(self::convertParamNames($toyData));
+                $form->addDataSource($dataSource);
+
+                self::showEditForm($toyData, $form);
+            }
         }
-        //var_dump($toyData);exit();
-        $form = new ToysEditForm("edit_form");
-            
-        if ($form->isSubmitted() && $form->validate()) { //popravi vnesene podatke
-            
-            $data = $form->getValue();
-            ToysDB::update($data);
-            ViewHelper::redirect(BASE_URL . "toy?id=" . $data["id"]);
-  
-        } else {
-           $dataSource = new HTML_QuickForm2_DataSource_Array(self::convertParamNames($toyData));
-           $form->addDataSource($dataSource);
-                
-           self::showEditForm($toyData, $form);
+        else {
+            ViewHelper::redirect(BASE_URL . "log-in");
         }
+
     }
 
     public static function delete() {
         $form = new ToysDeleteForm("delete_form");
-        
-        $toyId = $_GET["id"];
-        ToysDB::delete($toyId);
-        
-        echo ViewHelper::redirect(BASE_URL . "store");
-        
+
+        if (isset($_SESSION["uporabnik"])) { //lahko samo ce je logiran not
+            $toyId = htmlspecialchars($_GET["id"]);
+            ToysDB::delete($toyId);
+
+            echo ViewHelper::redirect(BASE_URL . "store");
+        }
+        else {
+            ViewHelper::redirect(BASE_URL . "log-in");
+        }
+
     }
     
     

@@ -6,7 +6,7 @@
 
 <h1>Sporočilo</h1>
 
-<?php var_dump($message);
+<?php //var_dump($message);
 echo $message ?>
 
 <?php

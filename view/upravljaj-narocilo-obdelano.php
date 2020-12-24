@@ -16,7 +16,7 @@
     <?php if ($narocilo["narocilo_postavka"] != 0) : //narocilo vsebuje artikle?>
 
         <div id="artikliNaNarocilu">
-            <table style="width:100%">
+            <table style="width:100%" border="1">
                 <tr>
                     <th> ID artikla </th>
                     <th> Ime artikla </th>
@@ -29,10 +29,10 @@
                     //var_dump($artikel);
                     ?> <!--izpiši vsako stranko posebej-->
                     <tr>
-                        <td><?= $artikel["artikel_id"] ?></td>
-                        <td><?= $artikli[$artikel["artikel_id"]]["artikel_ime"]  ?> </td>
-                        <td> <?= $artikel["artikelnarocilo_kolicina"] ?></td>
-                        <td><?= number_format( $artikli[$artikel["artikel_id"]]["artikel_cena"] , 2) ?> EUR</td>
+                        <td style="text-align: center; vertical-align: middle;"><?= $artikel["artikel_id"] ?></td>
+                        <td style="text-align: center; vertical-align: middle;"><?= $artikli[$artikel["artikel_id"]]["artikel_ime"]  ?> </td>
+                        <td style="text-align: center; vertical-align: middle;"> <?= $artikel["artikelnarocilo_kolicina"] ?></td>
+                        <td style="text-align: center; vertical-align: middle;"><?= number_format( $artikli[$artikel["artikel_id"]]["artikel_cena"] , 2) ?> EUR</td>
 
 
                     </tr>

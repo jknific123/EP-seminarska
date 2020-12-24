@@ -14,12 +14,12 @@
     <!--tle dodaj še povezavo na slike izdelka -->
 </div>
 
-<?php // else ($uporabnik == "prodajalec") : ?>
+<?php  if ($_SESSION["uporabnik"]["uporabnik_vrsta"] == "prodajalec" ) : ?>
     
     <a href="<?= BASE_URL . "toy/edit?id=" . $toy["artikel_id"] ?>"> <button>Uredi artikel </button></a>
-    <a href="<?= BASE_URL . "toy/delete?id=" . $toy["artikel_id"] ?>"> <button> Izbriši artikel </button></a> <br>
+    <a href="<?= BASE_URL . "toy/delete?id=" . $toy["artikel_id"] ?>"> <button> Deaktiviraj artikel </button></a> <br>
     
-<?php //endif; ?>
+<?php endif; ?>
     
     
-<br><a href="<?= BASE_URL . "" ?>"> Vrni se na prvo stran </a>
+<br><a href="<?= BASE_URL . "" ?>"> <button>Nazaj </button></a>
