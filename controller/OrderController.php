@@ -189,7 +189,7 @@ class OrderController {
             }
 
             //uspesno updejta status routamo nazaj na isto stran
-            echo ViewHelper::render("view/upravljaj-narocilo.php", ["narocilo" => $narocilo, "artikelNarocilo" => $artikelNarocilo, "artikli" => $artikli, "uporabnik" => $uporabnik]);
+            echo ViewHelper::render("view/upravljaj-narocilo-obdelano.php", ["narocilo" => $narocilo, "artikelNarocilo" => $artikelNarocilo, "artikli" => $artikli, "uporabnik" => $uporabnik]);
         }
         else {
             ViewHelper::redirect(BASE_URL . "log-in");

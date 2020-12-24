@@ -45,7 +45,7 @@
 
 </div>
 
-<?php if ($narocilo["narocilo_status"] == "obdelano"): //ga preklice z pritiskom na gumb?>
+<?php if ($narocilo["narocilo_status"] == "obdelano" && $_SESSION["uporabnik"]["uporabnik_vrsta"] != "stranka"): //ga preklice z pritiskom na gumb?>
 
     <form action="<?= BASE_URL . "order/storniraj" ?>" method="post" />
     <input type="hidden" name="narocilo_id" value="<?= $narocilo["narocilo_id"] ?>" />
@@ -56,4 +56,8 @@
 <?php endif; ?>
 
 
-<br><a href="<?= BASE_URL . "order/listAllApproved" ?>"> Nazaj </a>
+<?php if ($_SESSION["uporabnik"]["uporabnik_vrsta"] != "stranka") : ?>
+    <br><a href="<?= BASE_URL . "order/listAllApproved" ?>"> <button> Nazaj </button></a>
+<?php else : ?>
+    <br><a href="<?= BASE_URL . "order/list" ?>"> <button> Nazaj </button></a>
+<?php endif; ?>
